@@ -1,0 +1,2 @@
+# newspaper
+WordPress newspaper theme 
