@@ -1,0 +1,68 @@
+/*
+Theme Name: CTPress 
+Description: Coders Time Press theme by Wordpress
+Theme URI: https://github.com/coderstimes/newspaper
+Author: Coders Time
+Author URI: https://facebook.com/coderstime/
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ctpress
+
+*/
+
+.wp-block-table {
+	margin: 20px auto;
+}
+
+.wp-block-table table tr th, .wp-block-table table tr td{
+	border: 1px solid #333131;
+	padding: 8px 10px;
+	color: #0e0e0e;
+}
+.wp-block-image img {
+	height: auto;
+}
+.single-post-content ul li{
+	font-size: 16px;
+    line-height: 20px;
+    color: #151414;
+}
+
+.pagination_links{
+	display: flex;
+    justify-content: center;
+}
+.page-numbers{
+	margin:0;
+	padding: 0;
+	list-style: none;
+}
+.page-numbers li{
+	display: inline-block;
+    margin-right: 5px;
+}
+.page-numbers li .page-numbers{
+	cursor: pointer;
+    background: #eef0f1;
+    color: #545454;
+    display: inline-block;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1;
+    outline: none;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem 1.75rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.page-numbers li .page-numbers.current{
+	background: #f0ad4e;
+    color: #fff;
+}
