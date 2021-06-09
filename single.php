@@ -7,33 +7,50 @@ defined( 'ABSPATH' ) || exit;
 get_header(); 
 global $ctpress;
 $img_size = wp_is_mobile() ? 'medium_large' : 'full';
-
+ 
 ?>
       </header>
 
+      <div id="fb-root"></div>
+
       <main class="page_main_wrapper">
 
-         <div class="container">
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#"> <i class="fa fa-home"></i>&nbsp; </a></li>
-                <?php 
-                  $categories = get_the_category();
-                  foreach ($categories as $category ) {
-                     echo sprintf('<li class="breadcrumb-item" aria-current="page"> <a href="%s">%s</a> </li>', get_category_link( $category->cat_ID ), $category->name );
-                  }
-               ?>
-               <li class="breadcrumb-item active"> 
-                  <a href="#"> <?php echo the_title(); ?> </a> 
-               </li>
-              </ol>
-            </nav>
-         </div>
+         <?php get_template_part( 'template-parts/breadcrumb/single', 'page' ); ?>
 
          <div class="container">
             <div class="row my-5">
 
-               <?php get_template_part( 'template-parts/content/full', 'page' ); ?>
+            <?php 
+
+               if ( have_posts()) : 
+                  while (have_posts()) : 
+                     the_post();
+                     setPostViews( get_the_ID() );  
+
+                     switch ( $ctpress['post-screen'] ) {
+                        case '1':
+                           get_template_part( 'template-parts/posts/right', 'sidebar' );
+                           break;
+                        case '2':
+                           get_template_part( 'template-parts/posts/left', 'sidebar' );
+                           break;
+                        case '3':
+                           get_template_part( 'template-parts/posts/no', 'sidebar' );
+                           break;
+                        case '4':
+                           get_template_part( 'template-parts/posts/fullwidth' );
+                           break;
+                        
+                        default:
+                           echo "string";
+                           break;
+                     }
+
+                  endwhile; 
+               else :
+                  get_template_part( 'template-parts/content/no', 'content' );
+               endif;  
+            ?>
               
             </div>
          </div>
@@ -44,3 +61,9 @@ $img_size = wp_is_mobile() ? 'medium_large' : 'full';
 <script>
    jQuery('.img-layer-thumb').css('width',jQuery(".rounded")[0].clientWidth);
 </script>
+
+<?php  if ( $ctpress['comment_option'] ) : ?>
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=<?php echo $ctpress['fb_appId'] ? : '492209628792946';?>&autoLogAppEvents=1" nonce="YLjsSwmz"></script>
+
+<?php endif; ?>

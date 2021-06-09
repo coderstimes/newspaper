@@ -58,8 +58,8 @@
         //Specify if the admin menu should appear or not. Options: menu or submenu (Under appearance only)
         'allow_sub_menu'       => true,
         // Show the sections below the admin menu item or not
-        'menu_title'           => __( 'Theme Options', 'redux-framework-demo' ),
-        'page_title'           => __( 'Theme Options', 'redux-framework-demo' ),
+        'menu_title'           => __( 'Theme Options', 'ctpress' ),
+        'page_title'           => __( 'Theme Options', 'ctpress' ),
         // You will need to generate a Google API key to use this feature.
         // Please visit: https://developers.google.com/fonts/docs/developer_api#Auth
         'google_api_key'       => '',
@@ -103,7 +103,7 @@
         // Page slug used to denote the panel, will be based off page title then menu title then opt_name if not provided
         'save_defaults'        => false,
         // On load save the defaults to DB before user clicks save or not
-        'default_show'         => false,
+        'default_show'         => true,
         // If true, shows the default value next to each field that is not the default value.
         'default_mark'         => '',
         // What to print by the field's title if the value shown is default. Suggested: *
@@ -121,7 +121,7 @@
         // FUTURE -> Not in use yet, but reserved or partially implemented. Use at your own risk.
         'database'             => '',
         // possible: options, theme_mods, theme_mods_expanded, transient. Not fully functional, warning!
-        'use_cdn'              => true,
+        'use_cdn'              => false,
         // If you prefer not to use the CDN for Select2, Ace Editor, and others, you may download the Redux Vendor Support plugin yourself and run locally or embed it in your code.
 
         // HINTS
@@ -131,7 +131,7 @@
             'icon_color'    => 'lightgray',
             'icon_size'     => 'normal',
             'tip_style'     => array(
-                'color'   => 'red',
+                'color'   => '#2271b1',
                 'shadow'  => true,
                 'rounded' => false,
                 'style'   => '',
@@ -161,7 +161,7 @@
         'icon'  => 'el el-facebook'
     );
     $args['share_icons'][] = array(
-        'url'   => 'http://twitter.com/coderstime',
+        'url'   => 'http://twitter.com/coderstimes',
         'title' => 'Follow us on Twitter',
         'icon'  => 'el el-twitter'
     );
@@ -173,13 +173,13 @@
         } else {
             $v = str_replace( '-', '_', $args['opt_name'] );
         }
-        $args['intro_text'] = sprintf( __( '', 'redux-framework-demo' ), $v );
+        $args['intro_text'] = sprintf( __( '', 'ctpress' ), $v );
     } else {
-        $args['intro_text'] = __( '', 'redux-framework-demo' );
+        $args['intro_text'] = __( '', 'ctpress' );
     }
 
     // Add content after the form.
-    $args['footer_text'] = __( '', 'redux-framework-demo' );
+    $args['footer_text'] = __( '', 'ctpress' );
 
     Redux::setArgs( $opt_name, $args );
 
@@ -192,8 +192,8 @@
 				 array(
                     'id'       => 'ganalytics',
                     'type'     => 'ace_editor',
-                    'title'    => __( 'Google Analytics', 'redux-framework-demo' ),
-                    'subtitle' => __( 'Google Analytics code here.', 'redux-framework-demo' ),
+                    'title'    => __( 'Google Analytics', 'ctpress' ),
+                    'subtitle' => __( 'Google Analytics code here.', 'ctpress' ),
                     'mode'     => 'html',
                     'theme'    => 'monokai',
                     'desc'     => 'Google Analytics settings here ',
@@ -227,7 +227,16 @@
                     'default' =>array(
                         'url' =>get_template_directory_uri().'/assets/images/favicon.png'
                     ),
-                ),               
+                ),
+                array(
+                    'id'       => 'date-show',
+                    'type'     => 'switch',
+                    'title'    => __( 'Date Show', 'ctpress' ),
+                    'subtitle' => __( 'Date time show/hide', 'ctpress' ),
+                    'default'  => true,
+                    'on'       => __( 'Show', 'ctpress' ),
+                    'off'      => __( 'Hide', 'ctpress' )
+                ),
                 array(
                     'title' => 'logo linking',
                     'desc'  =>'Please set your logo link',
@@ -352,6 +361,98 @@
             ),
         ));
 
+
+    Redux::setSection( $opt_name, array(
+        'title'      => __( 'Comments', 'ctpress' ),
+        'id'         => 'switch_buttonset-switch',
+        'desc'       => __( 'Select your site commenting system. Default wordpress commenting system.', 'ctpress' ),
+        'icon'  =>'el el-comment',
+        'fields'     => array(            
+            array(
+                'id'       => 'comment_option',
+                'type'     => 'switch',
+                'title'    => __( 'Select One', 'ctpress' ),
+                'subtitle' => __( 'Default wordpress Comment', 'ctpress' ),
+                'default'  => 0,
+                'on'       => 'Facebook Comment',
+                'off'      => 'WordPress Comment',
+
+            ),
+            array(
+                'id'        => 'fb_appId',
+                'type'      => 'text',
+                'required' => array( 'comment_option', '=', '1' ),
+                'title'     => __( 'Facebook App ID', 'ctpress' ),
+                // 'subtitle'  => __( 'Facebook App id', 'ctpress' ),
+                'desc'      => __( 'Go to your facebook app, Copy app id, paste here ', 'ctpress' ) . '<a href="https://developers.facebook.com/apps/" target="_blank"> facebook App link</a>',
+                'default'   => '492209628792946',
+                'text_hint' => array(
+                    'title'   => 'Facebook App id',
+                    'content' => 'https://developers.facebook.com/apps/ go to this link, select your app and copy your app id'
+                )
+            ),
+
+            array(
+                'id'      => 'comments_preview_image',
+                'type'    => 'select_image',
+                'presets' => true,
+                'title'   => __( 'Preview', 'ctpress' ),
+                'default' => 1,
+                'options' => array(
+                    '1' => array(
+                        'alt' => 'Facebook Comment',
+                        'img' => ReduxFramework::$_url . '../sample/presets/facebook-comment.png',
+                    ),
+                    '2' => array(
+                        'alt' => 'Wordpress Comment',
+                        'img' => ReduxFramework::$_url . '../sample/presets/wordpress-comment.png',
+                    ),
+                ),
+            ),
+        )
+    ) );
+
+    Redux::setSection( $opt_name, array(
+        'title'      => __( 'View Screen', 'ctpress' ),
+        'id'         => 'select-select',
+        'desc'       => __( 'How page and post visible to reader/visitor settings page ', 'ctpress' ),
+        'fields'     => array(
+
+            array(
+                'id'       => 'post-screen',
+                'type'     => 'select',
+                'title'    => __( 'Select View Screen', 'ctpress' ),
+                'subtitle' => __( 'Select a screen option how visible to visitor', 'ctpress' ),
+                'desc'     => __( 'Website posts screen will be show with sidebar or no settings panel. Select a screen option how visible to visito', 'ctpress' ),
+                'options'  => array(
+                    '1' => 'Right Sidebar',
+                    '2' => 'Left Sidebar',
+                    '3' => 'No Sidebar',
+                    '4' => 'Full width',
+                ),
+                'default'  => '1'
+            ),
+
+            array(
+                'id'       => 'page-screen',
+                'type'     => 'select',
+                'title'    => __( 'Select View Screen', 'ctpress' ),
+                'subtitle' => __( 'Select a page screen option how visible to visitor', 'ctpress' ),
+                'desc'     => __( 'Website page screen will be show with sidebar or no settings panel Select page screen option how visible to visitor', 'ctpress' ),
+                'options'  => array(
+                    '1' => 'Right Sidebar',
+                    '2' => 'Left Sidebar',
+                    '3' => 'No Sidebar',
+                    '4' => 'Full width',
+                ),
+                'default'  => '1'
+            ),
+           
+        )
+    ) );
+
+
+
 	// header social icon link setting
     Redux::setSection($opt_name, array(
             'title' =>'Socail link setting',
@@ -361,8 +462,8 @@
                     'title' =>'Facebook Link',
                     'id'    =>'facebook',
                     'type'  =>'text',
-                    'subtitle' => __( 'This must be a URL.', 'redux-framework-demo' ),
-                    'desc'     => __( 'Give exact facebook page link', 'redux-framework-demo' ),
+                    'subtitle' => __( 'This must be a URL.', 'ctpress' ),
+                    'desc'     => __( 'Give exact facebook page link', 'ctpress' ),
                     'validate' => 'url',
                     'default'  => 'https://facebook.com/coderstime/'
                 ),
@@ -370,17 +471,26 @@
                     'title' =>'Twitter Link',
                     'id'    =>'twitter',
                     'type'  =>'text',
-                    'subtitle' => __( 'This must be a URL.', 'redux-framework-demo' ),
-                    'desc'     => __( 'Give exact Twitter page link', 'redux-framework-demo' ),
+                    'subtitle' => __( 'This must be a URL.', 'ctpress' ),
+                    'desc'     => __( 'Give exact Twitter page link', 'ctpress' ),
                     'validate' => 'url',
                     'default'  => 'https://twitter.com/'
+                ),
+                array(
+                    'title' =>'Instagram Link',
+                    'id'    =>'instagram',
+                    'type'  =>'text',
+                    'subtitle' => __( 'This must be a URL.', 'ctpress' ),
+                    'desc'     => __( 'Give exact Instagram page link', 'ctpress' ),
+                    'validate' => 'url',
+                    'default'  => 'https://www.instagram.com/'
                 ),
                 array(
                     'title' =>'Youtube Link',
                     'id'    =>'youtube',
                     'type'  =>'text',
-                    'subtitle' => __( 'This must be a URL.', 'redux-framework-demo' ),
-                    'desc'     => __( 'Give exact Youtube page link', 'redux-framework-demo' ),
+                    'subtitle' => __( 'This must be a URL.', 'ctpress' ),
+                    'desc'     => __( 'Give exact Youtube page link', 'ctpress' ),
                     'validate' => 'url',
                     'default'  => 'https://www.youtube.com/'
                 ),
@@ -388,166 +498,38 @@
                     'title' =>'LinkedIn Link',
                     'id'    =>'linkedin',
                     'type'  =>'text',
-                    'subtitle' => __( 'This must be a URL.', 'redux-framework-demo' ),
-                    'desc'     => __( 'Give exact Linkedin page link', 'redux-framework-demo' ),
+                    'subtitle' => __( 'This must be a URL.', 'ctpress' ),
+                    'desc'     => __( 'Give exact Linkedin page link', 'ctpress' ),
                     'validate' => 'url',
                     'default'  => 'https://www.linkedin.com/'
                 ),
-                array(
-                    'title' =>'Instagram Link',
-                    'id'    =>'instagram',
-                    'type'  =>'text',
-                    'subtitle' => __( 'This must be a URL.', 'redux-framework-demo' ),
-                    'desc'     => __( 'Give exact Instagram page link', 'redux-framework-demo' ),
-                    'validate' => 'url',
-                    'default'  => 'https://www.instagram.com/'
-                ),
+                
             ),
         ));
 
-
-    // Main body advertisement setting
-     Redux::setSection($opt_name, array(
-            'title' => 'Main body add setting',
-            'icon'  =>' el-icon-wrench-alt',
-            'fields' => array(
-                array(
-                    'title' => 'body add one',
-                    'desc'  =>'Please upload your add here',
-                    'type'  =>'media',
-                    'id'    =>'body1',
-                    'compiler' =>true,
-                    'default' =>array(
-                        'url' =>'',
-                    ),
-                ),
-                
-                array(
-                    'title' => 'body add two',
-                    'desc'  =>'Please upload your add here',
-                    'type'  =>'media',
-                    'id'    =>'body2',
-                    'compiler'=>true,
-                    'default'=>array(
-                        'url' =>'',
-                    ),
-                ),
-                
-                array(
-                    'title' => 'body add three',
-                    'desc'  =>'Please upload your add here',
-                    'type'  =>'media',
-                    'id'    =>'body3',
-                    'compiler'=>true,
-                    'default'=>array(
-                        'url' =>'',
-                    ),
-                ),
-                
-                array(
-                    'title' => 'body add four',
-                    'desc'  =>'Please upload your add here',
-                    'type'  =>'media',
-                    'id'    =>'body4',
-                    'compiler'=>true,
-                    'default'=>array(
-                        'url' =>'',
-                    ),
-                ),
-                
-                array(
-                    'title' => 'body add five',
-                    'desc'  =>'Please upload your add here',
-                    'type'  =>'media',
-                    'id'    =>'body5',
-                    'compiler'=>true,
-                    'default'=>array(
-                        'url' =>'',
-                    ),
-                ),
-                
-                array(
-                    'title' => 'Single page add',
-                    'desc'  =>'Please upload your add here',
-                    'type'  =>'media',
-                    'id'    =>'single',
-                    'compiler'=>true,
-                    'default'=>array(
-                        'url' =>'',
-                    ),
-                ),
-                
-                array(
-                    'title' => 'Category section add',
-                    'desc'  =>'Please upload your add here',
-                    'type'  =>'media',
-                    'id'    =>'category_page',
-                    'compiler'=>true,
-                    'default'=>array(
-                        'url' =>'',
-                    ),
-                ),
-                
-                array(
-                    'title' => 'Page section add',
-                    'desc'  =>'Please upload your add here',
-                    'type'  =>'media',
-                    'id'    =>'page',
-                    'compiler'=>true,
-                    'default'=>array(
-                        'url' =>'',
-                    ),
-                ),
-
-                array(
-                    'title' => 'link setting',
-                    'desc'  =>'please set your add link here',
-                    'type'  =>'text',
-                    'id'    =>'bodyadd',
-                    'options'=>array(
-                        '1'     =>'body ad one link',
-                        '2'     =>'body ad two link',
-                        '3'     =>'body ad three link',
-                        '4'     =>'body ad four link',
-                        '5'     =>'body ad five link',
-                        '6'     =>'single page add link',
-                        '7'     =>'category page add link',
-                        '8'     =>'page add link',
-                        '9'     =>'body ad nine link',
-                        '10'    =>'body ad ten link',
-                    ),
-                    'default'   =>array(
-                        '1'     =>''
-                    ),
-                ),
-
-
-                array(
-                    'title' => 'add visibility setting',
-                    'desc'  =>'Please set your add visibility here',
-                    'type'  =>'button_set',
-                    'id'    =>'visibility',
-                    'options'=>array(
-                        '1' =>'show',
-                        '2' =>'hide',
-                    ),
-                    'default'=>'1',
-                ),
-            )
-        ));
 
 
      /*Footer section setting*/
      $home_url = $_SERVER['HTTP_HOST'];
      Redux::setSection( $opt_name, array(
-            'title' => __( 'Footer', 'redux-framework-demo' ),
+            'title' => __( 'Footer', 'ctpress' ),
             'id'    => 'footer',
-            'desc'  => __( 'Footer information control panel', 'redux-framework-demo' ),
+            'desc'  => __( 'Footer information control panel', 'ctpress' ),
             'icon'  =>' el-icon-wrench-alt',
             'fields' => array(
                 array(
-                    'title' => __( 'Site Basic Info', 'redux-framework-demo' ),
-                    'desc'  => __( 'Your business basic information like office location and contact information','redux-framework-demo'),
+                    'title' => 'Footer Logo setting',
+                    'desc'  =>'Please upload footer logo here',
+                    'type'  =>'media',
+                    'id'    =>'footer_logo',
+                    'compiler' =>true,
+                    'default' =>array(
+                        'url' => get_template_directory_uri().'/assets/images/logo.svg'
+                    ),
+                ),
+                array(
+                    'title' => __( 'Site Basic Info', 'ctpress' ),
+                    'desc'  => __( 'Your business basic information like office location and contact information','ctpress'),
                     'default' => <<<FooterText
                     <h6> Office 1 : </h6>
                            <p><span> Address  </span></p>
@@ -567,9 +549,9 @@ FooterText,
                     )
                 ),
                 array(
-                    'title' => __( 'Footer Logo Text', 'redux-framework-demo' ),
-                    'desc'  => __( 'Site footer bottom logo text', 'redux-framework-demo' ),
-                    'default' => '<h6>' . __( 'Editor: Your name', 'redux-framework-demo' ) . '</h6>',
+                    'title' => __( 'Footer Logo Text', 'ctpress' ),
+                    'desc'  => __( 'Site footer bottom logo text', 'ctpress' ),
+                    'default' => '<h6>' . __( 'Editor: Your name', 'ctpress' ) . '</h6>',
                     'type'  =>'editor',
                     'id'    =>'footer_logo_bottom',
                     'args'    => array(
@@ -584,9 +566,9 @@ FooterText,
                     )
                 ),
                 array(
-                    'title' => __( 'Copyright Text', 'redux-framework-demo' ),
-                    'desc'  => __( 'Please edit your copyright text here', 'redux-framework-demo' ),
-                    'default' => __( '&copy; 2021, All rights reserved by ', 'redux-framework-demo' ) . '<a href="#" style="display: inline-block;font-weight: bold;"> Coders Time </a>',
+                    'title' => __( 'Copyright Text', 'ctpress' ),
+                    'desc'  => __( 'Please edit your copyright text here', 'ctpress' ),
+                    'default' => __( '&copy; 2021, All rights reserved by ', 'ctpress' ) . '<a href="#" style="display: inline-block;font-weight: bold;"> Coders Time </a>',
                     'type'  =>'editor',
                     'id'    =>'copyright_text',
                     'args'    => array(

@@ -13,7 +13,7 @@ global $ctpress;
             <div class="row">
                <div class="col-sm-4 footer-box">
                   <div class="about-inner">
-                     <img src="<?php echo $ctpress['logo']['url'] ?>" class="img-responsive" alt="The Daily Campus logo" />
+                     <img src="<?php echo $ctpress['footer_logo']['url'] ? : $ctpress['logo']['url'] ?>" class="img-responsive" alt="<?php echo get_bloginfo( 'name' ) . ' logo'; ?>" />
                      <ul>
                         <?php echo $ctpress['footer_logo_bottom'];?>
                      </ul>

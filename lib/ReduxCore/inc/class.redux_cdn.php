@@ -105,16 +105,7 @@ defined( 'ABSPATH' ) || exit;
                         self::_enqueue( $handle, $src, $deps, $ver, $footer_or_media, $is_script );
                     }
                 } else {
-                    if ( ! self::$_set ) {
-                        self::$_parent->admin_notices[] = array(
-                            'type'    => 'error',
-                            'msg'     => sprintf( __( 'The <a href="%s">Vendor Support plugin</a> (or extension) is either not installed or not activated and thus, some controls may not render properly.  Please ensure that it is installed and <a href="%s">activated</a>', 'redux-framework' ), 'https://github.com/reduxframework/redux-vendor-support', admin_url( 'plugins.php' ) ),
-                            'id'      => $handle . '23',
-                            'dismiss' => false,
-                        );
-
-                        self::$_set = true;
-                    }
+                    
                 }
             }
 

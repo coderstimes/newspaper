@@ -131,7 +131,7 @@ if ( ! class_exists( 'ReduxFramework_select_image' ) ) {
                 if ( '' == $this->value ) {
                     echo '<img src="#" class="redux-preview-image" style="visibility:hidden;" id="image_' . $this->field['id'] . '">';
                 } else {
-                    echo '<img src=' . $this->field['options'][ $arrNum - 1 ]['img'] . ' class="redux-preview-image" id="image_' . $this->field['id'] . '">';
+                    echo '<img src=' . $this->field['options'][ $arrNum ]['img'] . ' class="redux-preview-image" id="image_' . $this->field['id'] . '">';
                 }
 
                 // Close the <div> tag.

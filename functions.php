@@ -11,6 +11,8 @@ global $ctpress;
 
 defined( 'ABSPATH' ) || exit;
 
+require_once get_theme_file_path( 'widgets/latest-popular.php' );
+
 if ( ! function_exists( 'ctpress_theme_functions' ) ) :
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -28,8 +30,35 @@ function ctpress_theme_functions ( ) {
     // Add default posts and comments RSS feed links to head.
     add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'title-tag' );
+    add_theme_support('custom-logo');
     add_theme_support('custom-background');
     add_theme_support('post-thumbnails');
+
+     add_theme_support(
+        'html5',
+        [
+            'comment-list',
+            'comment-form',
+            'search-form',
+            'gallery',
+            'caption',
+            'style',
+            'script',
+        ]
+    );
+
+    add_theme_support(
+        'post-formats',
+        [
+            'link',
+            'gallery',
+            'image',
+            'quote',
+            'video',
+            'audio',
+        ]
+    );
+    add_editor_style( "/assets/css/editor-style.css" );
 
     function more_excerpt( $limit ){
     	$full_content= explode(' ', preg_replace('/<img[^>]+./','',get_the_excerpt()));
@@ -77,9 +106,7 @@ function ctpress_theme_functions ( ) {
 
 	if ( function_exists('register_nav_menus')) {
 			register_nav_menus([
-		    'main_menu'=>'Main menu',
-			'main_bottom_menu'=>'Main Bottom menu',
-			'footer_menu'=>'Footer menu'
+		    'main_menu'=> esc_html__( 'Main menu', 'ctpress' )
 		]);
 	}
 
@@ -99,15 +126,11 @@ final class codersTimePress {
     public function tdc_public_assets ( $screen ) {
         
         wp_enqueue_style( 'bootstrap' );
-        // wp_enqueue_style( 'animate_style' );
         wp_enqueue_style( 'bootsnav_style' );
         wp_enqueue_style( 'font-awesome' );
-        // wp_enqueue_style( 'themify-icon' );
-        // wp_enqueue_style( 'flaticon' );
         wp_enqueue_style( 'style-inews' );
         wp_enqueue_style( 'style' );
         wp_enqueue_style( 'styles' );
-
         wp_enqueue_script( 'bootstrap' );
     }
 
@@ -119,11 +142,8 @@ final class codersTimePress {
         $folder_path= __DIR__ . '/';
 
         wp_register_style( 'bootstrap', $asset_file_link . 'assets/bootstrap/bootstrap.min.css', [], '5.0.0' );
-        // wp_register_style( 'animate_style', $asset_file_link . 'assets/css/animate.min.css', [], filemtime($folder_path.'assets/css/animate.min.css') );
         wp_register_style( 'bootsnav_style', $asset_file_link . 'assets/bootsnav/bootsnav.css', [], filemtime($folder_path.'assets/bootsnav/bootsnav.css') );
         wp_register_style( 'font-awesome', $asset_file_link . 'assets/font-awesome/font-awesome.min.css', [], filemtime($folder_path.'assets/font-awesome/font-awesome.min.css') );
-        // wp_register_style( 'themify-icon', $asset_file_link . 'assets/themify-icons/themify-icons.css', [], filemtime($folder_path.'assets/themify-icons/themify-icons.css') );
-        // wp_register_style( 'flaticon', $asset_file_link . 'assets/css/flaticon.css', [], filemtime($folder_path.'assets/css/flaticon.css') );
         wp_register_style( 'style-inews', $asset_file_link . 'assets/css/style.css', [], filemtime($folder_path.'assets/css/style.css') );
         wp_register_style( 'style', $asset_file_link . 'style.css', [], filemtime($folder_path.'style.css') );
         wp_register_style( 'styles', $asset_file_link . 'assets/css/styles.css', [], filemtime($folder_path.'assets/css/styles.css') );
@@ -135,10 +155,10 @@ final class codersTimePress {
 
 new codersTimePress();
 
-// most view post function
+/*post view number function*/
 function getPostViews( $postID ) {
     $count_key = 'post_views_count';
-    $count = get_post_meta($postID, $count_key, true) ? : 1;
+    $count = get_post_meta( $postID, $count_key, true) ? : 1;
     return $count;
 }
 
@@ -149,50 +169,38 @@ function setPostViews ( $postID ) {
 }
 
 
-function tdc_sidebar ( ) {
+function ctpress_common_sidebar ( ) {
     register_sidebar(array(
-        'name'          =>'Right Sidebar',
-        'description'   =>'You can add right sidebar from here',
-        'id'            =>'right_sidebar',
-        'before_title'  =>'<h3>',
+        'name'          => esc_html__( 'Common Sidebar', 'ctpress' ),
+        'description'   => esc_html__( 'This sidebar for all pages and posts', 'ctpress' ),
+        'id'            =>'common_sidebar',
+        'before_title'  =>'<h3 class="py-3">',
         'after_title'   =>'</h3>',
-        'before_widget' =>'',
-        'after_widget' =>'',
-
+        'before_widget' =>'<div class="common_sidebar sidebar_widget my-4">',
+        'after_widget' =>'</div>',
+    ));
+    register_sidebar(array(
+        'name'          => esc_html__( 'Page Sidebar', 'ctpress' ),
+        'description'   => esc_html__( 'This sidebar for all page', 'ctpress' ),
+        'id'            =>'page_sidebar',
+        'before_title'  =>'<h3 class="py-3">',
+        'after_title'   =>'</h3>',
+        'before_widget' =>'<div class="page_sidebar sidebar_widget my-4">',
+        'after_widget' =>'</div>',
+    ));
+    register_sidebar(array(
+        'name'          => esc_html__( 'Post Sidebar', 'ctpress' ),
+        'description'   => esc_html__( 'This sidebar for all post', 'ctpress' ),
+        'id'            =>'post_sidebar',
+        'before_title'  =>'<h3 class="py-3">',
+        'after_title'   =>'</h3>',
+        'before_widget' =>'<div class="post_sidebar sidebar_widget my-4">',
+        'after_widget' =>'</div>',
+        'before_sidebar' => '<div class="before_sidebar">',
+        'after_sidebar'  => '</div>',
     ));
 }
-add_action('widgets_init','tdc_sidebar');
-
-/* Hide help menus and .wp-pointers pop-up dialogs that inform about
- * new features after WordPress upgrade */
-function wp_debranding_admin_css_hide(){
-    ?>
-    <style type="text/css">
-        #contextual-help-link-wrap,
-        .wp-pointer{
-            display: none !important;
-        }
-		#wp-admin-bar-wp-logo{
-			 display: none !important;
-		}
-    </style>
-    <?php
-	global $current_user;
-      wp_get_current_user();
-	
-	if( $current_user->user_login != 'thedailycampus'){
-		?>
-		<style type="text/css">
-        .menu-icon-appearance, .menu-icon-plugins, .toplevel_page_simple-author-box-options, .toplevel_page_simple-social-buttons, .menu-icon-tools, .menu-icon-settings{
-            display: none !important;
-        }
-    </style>
-    <?php
-	}
- 
-}
-// add_action('admin_print_styles', 'wp_debranding_admin_css_hide');
-
+add_action('widgets_init','ctpress_common_sidebar');
 
 /*ad class on ul li*/
 add_filter( 'nav_menu_css_class', function( $classes ) {
@@ -200,9 +208,8 @@ add_filter( 'nav_menu_css_class', function( $classes ) {
     return $classes;
 }, 10, 1 );
 
-add_filter( 'nav_menu_submenu_css_class', function( $subclass ) {
-    return ['dropdown-menu'];
-} );
+
+add_filter( 'nav_menu_submenu_css_class', function( $subclass ) { return ['dropdown-menu'];} );
 
 /*ad class on ul li a*/
 add_filter( 'nav_menu_link_attributes', 'add_additional_class_on_li', 10, 4 );
@@ -210,7 +217,6 @@ function add_additional_class_on_li( $atts, $item, $args, $depth ) {
     
     if ( in_array('menu-item-has-children', $item->classes )) {
         $item->classes[] = 'dropdown';
-        // print_r($args);
         $atts['class'] = 'nav-link dropdown-toggle';
         $atts['id'] = 'navbarDropdown_' . $item->ID;
         $atts['href'] = '#';

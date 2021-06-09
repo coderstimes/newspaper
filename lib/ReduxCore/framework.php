@@ -221,10 +221,6 @@ defined( 'ABSPATH' ) || exit;
                     $this->args['transient_time'] = 60 * MINUTE_IN_SECONDS;
                 }
 
-                if ( empty ( $this->args['footer_credit'] ) ) {
-                    $this->args['footer_credit'] = '<span id="footer-thankyou">' . sprintf( __( 'Options panel created using %1$s', 'redux-framework' ), '<a href="' . esc_url( $this->framework_url ) . '" target="_blank">' . __( 'Redux Framework', 'redux-framework' ) . '</a> v' . self::$_version ) . '</span>';
-                }
-
                 if ( empty ( $this->args['menu_title'] ) ) {
                     $this->args['menu_title'] = __( 'Options', 'redux-framework' );
                 }

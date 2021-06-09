@@ -8,11 +8,11 @@
  * @package Dynamico
  */
 
-if ( ! function_exists( 'dynamico_site_logo' ) ) :
+if ( ! function_exists( 'ctpress_site_logo' ) ) :
 	/**
 	 * Displays the site logo in the header area
 	 */
-	function dynamico_site_logo() {
+	function ctpress_site_logo() {
 
 		if ( has_custom_logo() ) : ?>
 
@@ -26,11 +26,11 @@ if ( ! function_exists( 'dynamico_site_logo' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_site_title' ) ) :
+if ( ! function_exists( 'ctpress_site_title' ) ) :
 	/**
 	 * Displays the site title in the header area
 	 */
-	function dynamico_site_title() {
+	function ctpress_site_title() {
 
 		if ( is_home() ) :
 			?>
@@ -47,11 +47,11 @@ if ( ! function_exists( 'dynamico_site_title' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_site_description' ) ) :
+if ( ! function_exists( 'ctpress_site_description' ) ) :
 	/**
 	 * Displays the site description in the header area
 	 */
-	function dynamico_site_description() {
+	function ctpress_site_description() {
 
 		$description = get_bloginfo( 'description', 'display' ); /* WPCS: xss ok. */
 
@@ -66,11 +66,11 @@ if ( ! function_exists( 'dynamico_site_description' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_header_image' ) ) :
+if ( ! function_exists( 'ctpress_header_image' ) ) :
 	/**
 	 * Displays the custom header image below the navigation menu
 	 */
-	function dynamico_header_image() {
+	function ctpress_header_image() {
 		if ( has_header_image() ) :
 			?>
 
@@ -86,11 +86,11 @@ if ( ! function_exists( 'dynamico_header_image' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_archive_header' ) ) :
+if ( ! function_exists( 'ctpress_archive_header' ) ) :
 	/**
 	 * Displays the header title on archive pages.
 	 */
-	function dynamico_archive_header() {
+	function ctpress_archive_header() {
 		?>
 
 		<header class="archive-header entry-header">
@@ -105,11 +105,11 @@ if ( ! function_exists( 'dynamico_archive_header' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_search_header' ) ) :
+if ( ! function_exists( 'ctpress_search_header' ) ) :
 	/**
 	 * Displays the header title on search results.
 	 */
-	function dynamico_search_header() {
+	function ctpress_search_header() {
 		?>
 
 		<header class="search-header entry-header">
@@ -129,12 +129,12 @@ if ( ! function_exists( 'dynamico_search_header' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_post_image_archives' ) ) :
+if ( ! function_exists( 'ctpress_post_image_archives' ) ) :
 	/**
 	 * Displays the featured image on archive posts.
 	 */
-	function dynamico_post_image_archives() {
-		$image_size = dynamico_get_option( 'blog_image' );
+	function ctpress_post_image_archives() {
+		$image_size = ctpress_get_option( 'blog_image' );
 
 		// Display Post Thumbnail if activated.
 		if ( has_post_thumbnail() && 'hide-image' !== $image_size ) :
@@ -155,18 +155,18 @@ if ( ! function_exists( 'dynamico_post_image_archives' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_post_image_single' ) ) :
+if ( ! function_exists( 'ctpress_post_image_single' ) ) :
 	/**
 	 * Displays the featured image on single posts.
 	 */
-	function dynamico_post_image_single() {
+	function ctpress_post_image_single() {
 
 		// Display Post Thumbnail if activated.
 		if ( has_post_thumbnail() ) :
 			?>
 
 			<figure class="post-image post-image-single">
-				<?php the_post_thumbnail( dynamico_get_option( 'post_image' ) ); ?>
+				<?php the_post_thumbnail( ctpress_get_option( 'post_image' ) ); ?>
 
 				<?php if ( wp_get_attachment_caption( get_post_thumbnail_id() ) ) : ?>
 					<figcaption class="wp-caption-text"><?php echo wp_kses_post( wp_get_attachment_caption( get_post_thumbnail_id() ) ); ?></figcaption>
@@ -179,11 +179,11 @@ if ( ! function_exists( 'dynamico_post_image_single' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_post_image_page' ) ) :
+if ( ! function_exists( 'ctpress_post_image_page' ) ) :
 	/**
 	 * Displays the featured image on static pages
 	 */
-	function dynamico_post_image_page() {
+	function ctpress_post_image_page() {
 		if ( has_post_thumbnail() ) :
 			?>
 
@@ -201,11 +201,11 @@ if ( ! function_exists( 'dynamico_post_image_page' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_post_image_featured_content' ) ) :
+if ( ! function_exists( 'ctpress_post_image_featured_content' ) ) :
 	/**
 	 * Displays the featured image in the featured content section.
 	 */
-	function dynamico_post_image_featured_content() {
+	function ctpress_post_image_featured_content() {
 		if ( has_post_thumbnail() ) :
 			?>
 
@@ -221,30 +221,30 @@ if ( ! function_exists( 'dynamico_post_image_featured_content' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_entry_meta' ) ) :
+if ( ! function_exists( 'ctpress_entry_meta' ) ) :
 	/**
 	 * Displays the date and author of a post
 	 */
-	function dynamico_entry_meta() {
+	function ctpress_entry_meta() {
 
-		$postmeta  = dynamico_entry_date();
-		$postmeta .= dynamico_entry_author();
-		$postmeta .= dynamico_entry_comments();
+		$postmeta  = ctpress_entry_date();
+		$postmeta .= ctpress_entry_author();
+		$postmeta .= ctpress_entry_comments();
 
-		echo '<div class="entry-meta">' . $postmeta . '</div>';
+		echo '<div class="entry-meta pb-3">' . $postmeta . '</div>';
 	}
 endif;
 
 
-if ( ! function_exists( 'dynamico_entry_date' ) ) :
+if ( ! function_exists( 'ctpress_entry_date' ) ) :
 	/**
 	 * Returns the post date
 	 */
-	function dynamico_entry_date() {
+	function ctpress_entry_date() {
 
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
 		}
 
 		$time_string = sprintf( $time_string,
@@ -256,16 +256,16 @@ if ( ! function_exists( 'dynamico_entry_date' ) ) :
 
 		$posted_on = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
 
-		return '<span class="posted-on">' . $posted_on . '</span>';
+		return '<span class="posted-on pe-2 float-start" style="border-right: 1px solid #b4adad;"> ' . $posted_on . '</span>';
 	}
 endif;
 
 
-if ( ! function_exists( 'dynamico_entry_author' ) ) :
+if ( ! function_exists( 'ctpress_entry_author' ) ) :
 	/**
 	 * Returns the post author
 	 */
-	function dynamico_entry_author() {
+	function ctpress_entry_author() {
 
 		$author_string = sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s" rel="author">%3$s</a></span>',
 			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
@@ -274,19 +274,19 @@ if ( ! function_exists( 'dynamico_entry_author' ) ) :
 			esc_html( get_the_author() )
 		);
 
-		return '<span class="posted-by"> ' . $author_string . '</span>';
+		return '<span class="posted-by px-2 float-start" style="border-right: 1px solid #b4adad;"> ' . $author_string . '</span>';
 	}
 endif;
 
 
-if ( ! function_exists( 'dynamico_entry_comments' ) ) :
+if ( ! function_exists( 'ctpress_entry_comments' ) ) :
 	/**
 	 * Displays the post comments
 	 */
-	function dynamico_entry_comments() {
-
+	function ctpress_entry_comments() {
+		global $ctpress;
 		// Check if comments are open or we have at least one comment.
-		if ( ! ( comments_open() || get_comments_number() ) ) {
+		if ( ! ( comments_open() || get_comments_number() ) || $ctpress['comment_option'] ) {
 			return;
 		}
 
@@ -304,16 +304,16 @@ if ( ! function_exists( 'dynamico_entry_comments' ) ) :
 		// End Output Buffering.
 		ob_end_clean();
 
-		return '<span class="entry-comments"> ' . $comments . '</span>';
+		return '<span class="entry-comments ps-2 float-start"> ' . $comments . '</span>';
 	}
 endif;
 
 
-if ( ! function_exists( 'dynamico_entry_categories' ) ) :
+if ( ! function_exists( 'ctpress_entry_categories' ) ) :
 	/**
 	 * Displays the post categories
 	 */
-	function dynamico_entry_categories() {
+	function ctpress_entry_categories() {
 
 		// Return early if post has no category.
 		if ( ! has_category() ) {
@@ -327,11 +327,11 @@ if ( ! function_exists( 'dynamico_entry_categories' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_entry_tags' ) ) :
+if ( ! function_exists( 'ctpress_entry_tags' ) ) :
 	/**
 	 * Displays the post tags on single post view
 	 */
-	function dynamico_entry_tags() {
+	function ctpress_entry_tags() {
 		// Get tags.
 		$tag_list = get_the_tag_list( sprintf( '<span class="entry-tags-label">%s </span>', esc_html__( 'Tagged with', 'dynamico' ) ), ', ' );
 
@@ -343,14 +343,14 @@ if ( ! function_exists( 'dynamico_entry_tags' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_more_link' ) ) :
+if ( ! function_exists( 'ctpress_more_link' ) ) :
 	/**
 	 * Displays the more link on posts
 	 */
-	function dynamico_more_link() {
+	function ctpress_more_link() {
 
 		// Get Read More Text.
-		$read_more = dynamico_get_option( 'read_more_link' );
+		$read_more = ctpress_get_option( 'read_more_link' );
 
 		if ( '' !== $read_more || is_customize_preview() ) :
 			?>
@@ -363,68 +363,48 @@ if ( ! function_exists( 'dynamico_more_link' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_post_navigation' ) ) :
+if ( ! function_exists( 'ctpress_post_navigation' ) ) :
 	/**
 	 * Displays Single Post Navigation
 	 */
-	function dynamico_post_navigation() {
+	function ctpress_post_navigation() {
 
-		if ( true === dynamico_get_option( 'post_navigation' ) || is_customize_preview() ) :
+		// if ( true === ctpress_get_option( 'post_navigation' ) || is_customize_preview() ) :
 
 			the_post_navigation( array(
-				'prev_text' => '<span class="nav-link-text">' . esc_html_x( 'Previous Post', 'post navigation', 'dynamico' ) . '</span><h3 class="entry-title">%title</h3>',
-				'next_text' => '<span class="nav-link-text">' . esc_html_x( 'Next Post', 'post navigation', 'dynamico' ) . '</span><h3 class="entry-title">%title</h3>',
+				'prev_text' => '<span class="nav-link-text"> ' . esc_html_x( 'Previous Post', 'post navigation', 'ctpress' ) . '</span><h3 class="entry-title">%title</h3>',
+				'next_text' => '<span class="nav-link-text">' . esc_html_x( 'Next Post', 'post navigation', 'ctpress' ) . '</span><h3 class="entry-title">%title</h3>',
 			) );
 
-		endif;
+		// endif;
 	}
 endif;
 
 
-/**
-* Display Featured Posts section
-*/
-function dynamico_featured_posts() {
-
-	// Display post slider only if activated.
-	if ( true === dynamico_get_option( 'featured_posts' ) ) :
-
-		echo '<div id="featured-posts" class="featured-posts-wrap">';
-		get_template_part( 'template-parts/featured/featured-posts' );
-		echo '</div>';
-
-	elseif ( is_customize_preview() ) :
-		echo '<div id="featured-posts" class="featured-posts-wrap"></div>';
-	endif;
-}
-
-
-if ( ! function_exists( 'dynamico_pagination' ) ) :
+if ( ! function_exists( 'ctpress_pagination' ) ) :
 	/**
 	 * Displays pagination on archive pages
 	 */
-	function dynamico_pagination() {
-
+	function ctpress_pagination() {
 		the_posts_pagination( array(
 			'mid_size'  => 2,
-			'prev_text' => '&laquo<span class="screen-reader-text">' . esc_html_x( 'Previous Posts', 'pagination', 'dynamico' ) . '</span>',
-			'next_text' => '<span class="screen-reader-text">' . esc_html_x( 'Next Posts', 'pagination', 'dynamico' ) . '</span>&raquo;',
+			'prev_text' => '&laquo <span class="pagination-text">' . esc_html_x( 'Previous', 'pagination', 'ctpress' ) . '</span>',
+			'next_text' => '<span class="pagination-text">' . esc_html_x( 'Next', 'pagination', 'ctpress' ) . '</span> &raquo;',
 		) );
-
 	}
 endif;
 
 
-if ( ! function_exists( 'dynamico_footer_text' ) ) :
+if ( ! function_exists( 'ctpress_footer_text' ) ) :
 	/**
 	 * Displays footer text on footer line
 	 */
-	function dynamico_footer_text() {
-		if ( '' !== dynamico_get_option( 'footer_text' ) || is_customize_preview() ) :
+	function ctpress_footer_text() {
+		if ( '' !== ctpress_get_option( 'footer_text' ) || is_customize_preview() ) :
 			?>
 
 			<span class="footer-text">
-				<?php echo do_shortcode( wp_kses_post( dynamico_get_option( 'footer_text' ) ) ); ?> 
+				<?php echo do_shortcode( wp_kses_post( ctpress_get_option( 'footer_text' ) ) ); ?> 
 			</span>
 
 			<?php
@@ -433,12 +413,12 @@ if ( ! function_exists( 'dynamico_footer_text' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_credit_link' ) ) :
+if ( ! function_exists( 'ctpress_credit_link' ) ) :
 	/**
 	 * Displays credit link on footer line
 	 */
-	function dynamico_credit_link() {
-		if ( true === dynamico_get_option( 'credit_link' ) || is_customize_preview() ) :
+	function ctpress_credit_link() {
+		if ( true === ctpress_get_option( 'credit_link' ) || is_customize_preview() ) :
 			?>
 
 			<span class="credit-link">
@@ -457,11 +437,11 @@ if ( ! function_exists( 'dynamico_credit_link' ) ) :
 endif;
 
 
-if ( ! function_exists( 'dynamico_breadcrumbs' ) ) :
+if ( ! function_exists( 'ctpress_breadcrumbs' ) ) :
 	/**
 	 * Displays ThemeZee Breadcrumbs plugin
 	 */
-	function dynamico_breadcrumbs() {
+	function ctpress_breadcrumbs() {
 
 		if ( function_exists( 'themezee_breadcrumbs' ) ) {
 
@@ -474,22 +454,3 @@ if ( ! function_exists( 'dynamico_breadcrumbs' ) ) :
 	}
 endif;
 
-
-if ( ! function_exists( 'dynamico_related_posts' ) ) :
-	/**
-	 * Displays ThemeZee Related Posts plugin
-	 */
-	function dynamico_related_posts() {
-
-		if ( function_exists( 'themezee_related_posts' ) ) {
-
-			themezee_related_posts( array(
-				'container'    => 'div',
-				'class'        => 'related-posts',
-				'before_title' => '<header class="related-posts-header"><h2 class="related-posts-title entry-title">',
-				'after_title'  => '</h2></header>',
-			) );
-
-		}
-	}
-endif;

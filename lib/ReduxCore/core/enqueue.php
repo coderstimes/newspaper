@@ -76,11 +76,11 @@
                 //*****************************************************************
                 // Select2 CSS
                 //*****************************************************************
-                Redux_CDN::register_style(
+                wp_enqueue_style(
                     'select2-css',
-                    '//cdn.jsdelivr.net/select2/3.5.2/select2.css',
+                    ReduxFramework::$_url . 'assets/css/select2.css',
                     array(),
-                    '3.5.2',//$this->timestamp,
+                    '3.5.2',
                     'all'
                 );
 
@@ -213,11 +213,10 @@
                     wp_dequeue_style('jquerySelect2Style');
                 }
                 
-                
-                Redux_CDN::register_script(
+                wp_register_script(
                     'select2-js',
-                    '//cdn.jsdelivr.net/select2/3.5.2/select2' . $this->min . '.js',
-                    array( 'jquery', 'redux-select2-sortable-js' ),
+                    ReduxFramework::$_url . 'assets/js/select2.js',
+                    array( 'jquery' ),
                     '3.5.2',
                     true
                 );
@@ -428,12 +427,6 @@
                             }
                         }
                     }
-                }
-
-                if ( isset( $this->parent->args['dev_mode'] ) && $this->parent->args['dev_mode'] == true || $this->parent->args['dev_mode'] == false && isset($this->parent->args['forced_dev_mode_off']) && $this->parent->args['forced_dev_mode_off'] == true ) {
-                    $nonce                               = wp_create_nonce( 'redux-ads-nonce' );
-                    $base                                = admin_url( 'admin-ajax.php' ) . '?action=redux_p&nonce=' . $nonce . '&url=';
-                    $this->parent->localize_data['rAds'] = Redux_Helpers::rURL_fix( $base, $this->parent->args['opt_name'] );
                 }
 
                 $this->parent->localize_data['fieldsHidden'] = $this->parent->fieldsHidden;

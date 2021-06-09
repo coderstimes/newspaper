@@ -186,8 +186,8 @@ $img_size = 'medium';
   </div>
 
   <div class="container">
-    <div class="row two-col-layout">
-       <div class="col-left br-right">
+    <div class="row">
+       <div class="col-md-8 br-right">
 
           <div class="row no-margin">
              <div class="col-xs-12">
@@ -441,7 +441,7 @@ $img_size = 'medium';
 
 
        </div>
-       <div class="col-right br-top">
+       <div class="col-md-4 br-top">
 
           <?php get_template_part( 'template-parts/sidebar/latest', 'popular' ); ?>
 
@@ -452,10 +452,10 @@ $img_size = 'medium';
                    <h2> <?php echo get_cat_name($ctpress['right_sidebarcat']);?> </h2>
                 </a>
              </div>
-             <div class="contents p-l-10">
+             <div class="contents">
 
                 <div class="row">
-                   <div class="col-xs-12 pt-4">
+                   <div class="col-xs-12 pt-2">
                       <?php 
                          $right_sidebarcat_lead = 0;
                          $right_sidebarcat = new WP_Query( [
@@ -468,7 +468,7 @@ $img_size = 'medium';
                          $right_sidebarcat_lead = get_the_ID();
                       ?>
                       <a class="post-item" href="<?php the_permalink()?>">
-                         <figure class="img-holder me-2">
+                         <figure class="img-holder sidebar-lead me-2 text-center">
 
                           <?php echo get_the_post_image( ); ?>  
 
