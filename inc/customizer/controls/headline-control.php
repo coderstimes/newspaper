@@ -2,7 +2,7 @@
 /**
  * Headline Control for the Customizer
  *
- * @package Dynamico
+ * @package Ctpress
  */
 
 /**
@@ -13,7 +13,22 @@ if ( class_exists( 'WP_Customize_Control' ) ) :
 	/**
 	 * Displays a bold label text. Used to create headlines for radio buttons and description sections.
 	 */
-	class Dynamico_Customize_Header_Control extends WP_Customize_Control {
+	class Ctpress_Customize_Header_Control extends WP_Customize_Control {
+		/**
+		 * Render Control
+		 */
+		public function render_content() {
+			?>
+
+			<label>
+				<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+			</label>
+
+			<?php
+		}
+	}
+
+	class Ctpress_Customize_Menu_Control extends WP_Customize_Control {
 		/**
 		 * Render Control
 		 */

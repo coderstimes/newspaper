@@ -69,9 +69,9 @@ defined( 'ABSPATH' ) || exit;
          <nav class="navbar navbar-expand-lg navbar-sticky navbar-mobile bootsnav">
             <div class="top-search">
                <div class="container">
-
-                  <?php get_template_part( 'template-parts/header/site', 'search' ); ?>
-                  
+                  <!-- <div class="attr-nav"> -->
+                     <?php ctpress_menu_search(); ?>
+                  <!-- </div> -->
                </div>
             </div>
             <div class="container no-padding">
@@ -91,10 +91,7 @@ defined( 'ABSPATH' ) || exit;
                </div>
 
                <div class="attr-nav hidden-sm hidden-xs">
-                  <form class="searchform d-flex">
-                    <input class="form-control me-2 d-none" type="search" placeholder="Search" aria-label="Search" name="s">
-                    <button class="btn btn-outline-warning text-white search_btn bg-warning" type="button"> <?php _e( 'Search', 'dynamico' ); ?></button>               
-                  </form>
+                  <?php ctpress_menu_search(); ?>
                </div>
 
             </div>

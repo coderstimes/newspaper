@@ -93,12 +93,7 @@
 
                 if ( empty( $opt_name ) ) {
                     return;
-                }
-
-                $check = ReduxFrameworkInstances::get_instance( $opt_name );
-                if ( isset( $check->apiHasRun ) ) {
-                    return;
-                }
+                }               
 
                 $args     = self::constructArgs( $opt_name );
                 $sections = self::constructSections( $opt_name );
@@ -556,43 +551,10 @@
             }
 
             public static function getAllExtensions() {
-                $redux = ReduxFrameworkInstances::get_all_instances();
-                foreach ( $redux as $instance ) {
-                    if ( ! empty( self::$uses_extensions[ $instance['args']['opt_name'] ] ) ) {
-                        continue;
-                    }
-                    if ( ! empty( $instance['extensions'] ) ) {
-
-                        Redux::getInstanceExtensions( $instance['args']['opt_name'], $instance );
-                    }
-                }
+                
             }
 
-            public static function getInstanceExtensions( $opt_name, $instance = array() ) {
-                if ( ! empty( self::$uses_extensions[ $opt_name ] ) ) {
-                    return;
-                }
-                if ( empty( $instance ) ) {
-                    $instance = ReduxFrameworkInstances::get_instance( $opt_name );
-                }
-                if ( empty( $instance ) || empty( $instance->extensions ) ) {
-                    return;
-                }
-                foreach ( $instance->extensions as $name => $extension ) {
-                    if ( $name == "widget_areas" ) {
-                        $new = new Redux_Widget_Areas( $instance );
-                    }
-                    if ( isset( self::$uses_extensions[ $opt_name ][ $name ] ) ) {
-                        continue;
-                    }
-                    if ( isset( $extension->extension_dir ) ) {
-                        Redux::setExtensions( $opt_name, str_replace( $name, '', $extension->extension_dir ) );
-
-                    } else if ( isset( $extension->_extension_dir ) ) {
-                        Redux::setExtensions( $opt_name, str_replace( $name, '', $extension->_extension_dir ) );
-                    }
-                }
-            }
+          
 
             public static function getExtensions( $opt_name = "", $key = "" ) {
 
@@ -606,9 +568,7 @@
                         }
                     }
                 } else {
-                    if ( empty( self::$uses_extensions[ $opt_name ] ) ) {
-                        Redux::getInstanceExtensions( $opt_name );
-                    }
+                   
 
                     if ( empty( self::$uses_extensions[ $opt_name ] ) ) {
                         return false;

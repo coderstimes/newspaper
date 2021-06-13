@@ -7,6 +7,10 @@ defined( 'ABSPATH' ) || exit;
 get_header(); 
 global $ctpress;
 
+// echo '<pre>';
+// print_r(get_option('ctpress'));
+// echo "</pre>";
+
 ?>
 
 <?php get_template_part( 'template-parts/breadcrumb/category', 'desktop' ); ?>

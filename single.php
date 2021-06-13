@@ -59,7 +59,11 @@ $img_size = wp_is_mobile() ? 'medium_large' : 'full';
 
 <?php get_footer(); ?>
 <script>
-   jQuery('.img-layer-thumb').css('width',jQuery(".rounded")[0].clientWidth);
+   (function($){
+      $(document).ready(function(){
+         $('.img-holder .img-caption').css('width',$(".img-holder img")[0].clientWidth);
+      });      
+   })(jQuery);   
 </script>
 
 <?php  if ( $ctpress['comment_option'] ) : ?>

@@ -2,72 +2,141 @@
 /**
  * Implement theme options in the Customizer
  *
- * @package Dynamico
+ * @package Ctpress
  */
 
-// Load Sanitize Functions.
-require( get_template_directory() . '/inc/customizer/sanitize-functions.php' );
+final class CTPressCustomizer {
 
-// Load Custom Controls.
-require( get_template_directory() . '/inc/customizer/controls/category-dropdown-control.php' );
-require( get_template_directory() . '/inc/customizer/controls/headline-control.php' );
-require( get_template_directory() . '/inc/customizer/controls/links-control.php' );
-require( get_template_directory() . '/inc/customizer/controls/plugin-control.php' );
-require( get_template_directory() . '/inc/customizer/controls/upgrade-control.php' );
+	public function __construct ( ) 
+	{
+		/*Load Sanitize Functions.*/
+		require( get_template_directory() . '/inc/customizer/sanitize-functions.php' );
 
-// Load Customizer Sections.
-require( get_template_directory() . '/inc/customizer/sections/website-settings.php' );
-require( get_template_directory() . '/inc/customizer/sections/layout-settings.php' );
-require( get_template_directory() . '/inc/customizer/sections/featured-posts-settings.php' );
-require( get_template_directory() . '/inc/customizer/sections/blog-settings.php' );
-require( get_template_directory() . '/inc/customizer/sections/post-settings.php' );
-require( get_template_directory() . '/inc/customizer/sections/footer-settings.php' );
-require( get_template_directory() . '/inc/customizer/sections/theme-info-settings.php' );
+		/*Load Custom Controls.*/
+		require( get_template_directory() . '/inc/customizer/controls/headline-control.php' );
 
-/**
- * Registers Theme Options panel and sets up some WordPress core settings
- *
- * @param object $wp_customize / Customizer Object.
- */
-function dynamico_customize_register_options( $wp_customize ) {
+		/*Load Customizer Sections.*/
+		require( get_template_directory() . '/inc/customizer/sections/website-settings.php' );
+		require( get_template_directory() . '/inc/customizer/sections/menu-settings.php' );
+		require( get_template_directory() . '/inc/customizer/sections/post-settings.php' );
+		require( get_template_directory() . '/inc/customizer/sections/footer-settings.php' );
 
-	// Add Theme Options Panel.
-	$wp_customize->add_panel( 'dynamico_options_panel', array(
-		'priority'       => 180,
-		'capability'     => 'edit_theme_options',
-		'theme_supports' => '',
-		'title'          => esc_html__( 'Theme Options', 'dynamico' ),
-	) );
+		add_action( 'customize_register', [$this,'ctpress_customize_register'] );
+		add_action( 'customize_preview_init', [$this,'ctpress_customize_js'] );
+		add_action( 'customize_controls_enqueue_scripts', [$this,'ctpress_customizer_js'] );
+		add_action( 'customize_controls_print_styles', [$this,'ctpress_customizer_css'] );
 
-	// Change default background section.
-	$wp_customize->get_control( 'background_color' )->section = 'background_image';
-	$wp_customize->get_section( 'background_image' )->title   = esc_html__( 'Background', 'dynamico' );
+		/*Output custom CSS to live site*/
+		add_action( 'wp_head' , [ $this , 'header_output' ] );
+
+	}
+
+	/**
+	 * Registers Theme Options panel and sets up some WordPress core settings
+	 *
+	 * @param object $wp_customize / Customizer Object.
+	 */
+	public function ctpress_customize_register( $wp_customize ) 
+	{
+
+		// Add Theme Options Panel.
+		$wp_customize->add_panel( 'ctpress_options_panel', array(
+			'priority'       => 120,
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'title'          => esc_html__( 'Theme Settings', 'ctpress' ),
+		) );
+
+		// Change default background section.
+		$wp_customize->get_control( 'background_color' )->section = 'background_image';
+		$wp_customize->get_control( 'background_color' )->label = esc_html__( 'Site background color', 'ctpress' );
+		$wp_customize->get_section( 'background_image' )->title   = esc_html__( 'Background settings', 'ctpress' );
+		$wp_customize->get_control( 'background_image' )->label = esc_html__( 'Site background Image', 'ctpress' );
+	}
+
+	/**
+	 * Embed JS file to make Theme Customizer preview reload changes asynchronously.
+	 */
+	public function ctpress_customize_js() 
+	{
+		wp_enqueue_script( 'ctpress-customize-preview', get_template_directory_uri() . '/assets/js/customize-preview.js', array( 'customize-preview' ), time(), true );
+	}
+
+
+	/**
+	 * Embed JS for Customizer Controls.
+	 */
+	public function ctpress_customizer_js() 
+	{
+		wp_enqueue_script( 'ctpress-customizer-controls', get_template_directory_uri() . '/assets/js/customizer-controls.js', array(), time(), true );
+	}
+
+
+	/**
+	 * Embed CSS styles Customizer Controls.
+	 */
+	public function ctpress_customizer_css() 
+	{
+		wp_enqueue_style( 'ctpress-customizer-controls', get_template_directory_uri() . '/assets/css/customizer-controls.css', array(), time() );
+	}
+
+	/**
+    * This will output the custom WordPress settings to the live theme's WP head.
+    * 
+    * Used by hook: 'wp_head'
+    * 
+    * @see add_action('wp_head',$func)
+    * @since MyTheme 1.0
+    */
+   public static function header_output() {
+      ?>
+      <!--Customizer CSS--> 
+      <style type="text/css">
+           <?php
+           $data = [
+           	'menu_bg_color' => ['background-color','nav.navbar.bootsnav, .attr-nav .search_btn'],
+           	'menu_font_color' => ['color','nav.navbar.bootsnav, .attr-nav .search_btn'],
+           	'menu_font_hv_clr' => ['hover','nav.navbar.bootsnav, .attr-nav .search_btn'],
+           ];
+           self::generate_css( $data ); 
+           ?> 
+      </style> 
+      <!--/Customizer CSS-->
+      <?php
+   }
+
+
+    /**
+     * This will generate a line of CSS for use in header output. If the setting
+     * ($mod_name) has no defined value, the CSS will not be output.
+     * 
+     * @uses get_theme_mod()
+     * @param string $selector CSS selector
+     * @param string $style The name of the CSS *property* to modify
+     * @param string $mod_name The name of the 'theme_mod' option to fetch
+     * @param string $prefix Optional. Anything that needs to be output before the CSS property
+     * @param string $postfix Optional. Anything that needs to be output after the CSS property
+     * @param bool $echo Optional. Whether to print directly to the page (default: true).
+     * @return string Returns a single line of CSS with selectors and a property.
+     * @since MyTheme 1.0
+     */
+    public static function generate_css( $data, $prefix='', $postfix='', $echo=true ) {
+		$value = '';
+		$theme_data = ctpress_theme_options();
+		foreach ( $data as $key => $datum ) {
+		     $value .= sprintf('%s { %s:%s; } ',
+		        $datum[1],
+		        $datum[0],
+		        $prefix.$theme_data[$key].$postfix
+		     );
+		}
+
+		if ( $echo ) {
+			echo $value;
+		}
+      
+      return $value;
+    }
+
 }
-add_action( 'customize_register', 'dynamico_customize_register_options' );
-
-
-/**
- * Embed JS file to make Theme Customizer preview reload changes asynchronously.
- */
-function dynamico_customize_preview_js() {
-	wp_enqueue_script( 'dynamico-customize-preview', get_template_directory_uri() . '/assets/js/customize-preview.js', array( 'customize-preview' ), '20201114', true );
-}
-add_action( 'customize_preview_init', 'dynamico_customize_preview_js' );
-
-
-/**
- * Embed JS for Customizer Controls.
- */
-function dynamico_customizer_controls_js() {
-	wp_enqueue_script( 'dynamico-customizer-controls', get_template_directory_uri() . '/assets/js/customizer-controls.js', array(), '20201116', true );
-}
-add_action( 'customize_controls_enqueue_scripts', 'dynamico_customizer_controls_js' );
-
-
-/**
- * Embed CSS styles Customizer Controls.
- */
-function dynamico_customizer_controls_css() {
-	wp_enqueue_style( 'dynamico-customizer-controls', get_template_directory_uri() . '/assets/css/customizer-controls.css', array(), '20201119' );
-}
-add_action( 'customize_controls_print_styles', 'dynamico_customizer_controls_css' );
+new CTPressCustomizer;

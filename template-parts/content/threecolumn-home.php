@@ -24,7 +24,7 @@
 
    <div class="col-md-4 <?php echo ( $row_num % 3 == 0 ) ? $margin_bottom : '' ; ?>">
       <figure class="img-holder text-center">
-         <?php echo get_the_post_image( $img_size ); ?>
+         <?php echo ctpress_get_post_image( $img_size ); ?>
       </figure>
 
       <div class="mt-3">

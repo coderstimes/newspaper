@@ -12,13 +12,14 @@
 *
 * @return mixed
 */
-function ctpress_get_option( $option_name = '' ) {
-
-	// Get all Theme Options from Database.
+function ctpress_get_option( $option_name = '' ) 
+{
+	/*Get all Theme Options from Database.*/
 	$theme_options = ctpress_theme_options();
 
-	// Return single option.
+	/*Return single option.*/
 	if ( isset( $theme_options[ $option_name ] ) ) {
+	// if ( array_key_exists( $option_name, $theme_options) ) {
 		return $theme_options[ $option_name ];
 	}
 
@@ -34,7 +35,7 @@ function ctpress_get_option( $option_name = '' ) {
 function ctpress_theme_options() {
 
 	// Merge theme options array from database with default options array.
-	$theme_options = wp_parse_args( get_option( 'ctpress_theme_options', array() ), ctpress_default_options() );
+	$theme_options = wp_parse_args( get_option( 'ctpress', array() ), ctpress_default_options() );
 
 	// Return theme options.
 	return apply_filters( 'ctpress_theme_options', $theme_options );
@@ -65,6 +66,10 @@ function ctpress_default_options() {
 		'site_office_info'       => false,
 		'footer_logo_bottom'     => '',
 		'copyright_text'         => __( '&copy; 2021, All rights reserved by ', 'ctpress' ) . '<a href="#" style="display: inline-block;font-weight: bold;"> Coders Time </a>',
+		'menu_bg_color'          => '#dfad10',
+		'menu_font_color'        => '#fff',
+		'menu_font_hv_clr'       => '#eb0254',
+		'menu_search'            => false,
 		'site_title'             => true,
 		'site_description'       => true,
 		'theme_layout'           => 'centered',

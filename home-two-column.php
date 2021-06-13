@@ -9,7 +9,6 @@ get_header();
 global $ctpress;
 ?>
 
-
    </header>
 
    <main class="two_column_wrapper mb-5">
@@ -26,7 +25,7 @@ global $ctpress;
 
             <!-- category sidebar -->
             <div class="col-md-4 pt-5">
-               <?php get_template_part( 'template-parts/sidebar/category', 'desktop' ); ?>
+               <?php get_template_part( 'template-parts/sidebar/home', 'sidebar' ); ?>
             </div>
 
          </div>

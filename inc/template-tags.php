@@ -5,8 +5,26 @@
  * This file contains several template functions which are used to print out specific HTML markup
  * in the theme. You can override these template functions within your child theme.
  *
- * @package Dynamico
+ * @package Ctpress
  */
+
+if ( ! function_exists( 'ctpress_menu_search' ) ) :
+	/**
+	 * Displays the site logo in the header area
+	 */
+	function ctpress_menu_search() {
+
+		if (  ! ctpress_get_option( 'menu_search' ) || is_customize_preview() ) : ?>
+
+              <form class="searchform d-flex">
+                <input class="form-control me-2 d-none" type="search" placeholder="<?php _e( 'Search', 'ctpress' ); ?>" aria-label="search" name="s">
+                <button class="btn btn-outline-warning search_btn" type="button"> <?php _e( 'Search', 'ctpress' ); ?></button>               
+              </form>
+
+			<?php
+		endif;
+	}
+endif;
 
 if ( ! function_exists( 'ctpress_site_logo' ) ) :
 	/**

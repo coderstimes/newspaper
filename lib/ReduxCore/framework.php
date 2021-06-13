@@ -29,22 +29,10 @@ defined( 'ABSPATH' ) || exit;
             remove_action( 'admin_init', 'pb_admin_init' );
         }
     }
-
-    if ( ! class_exists( 'ReduxFrameworkInstances' ) ) {
-        // Instance Container
-        require_once dirname( __FILE__ ) . '/inc/class.redux_instances.php';
-        require_once dirname( __FILE__ ) . '/inc/lib.redux_instances.php';
-    }
-
-    if ( class_exists( 'ReduxFrameworkInstances' ) ) {
-        add_action( 'redux/init', 'ReduxFrameworkInstances::get_instance' );
-    }
+  
 
 // Don't duplicate me!
     if ( ! class_exists( 'ReduxFramework' ) ) {
-
-        // Redux CDN class
-        require_once dirname( __FILE__ ) . '/inc/class.redux_cdn.php';
 
         // Redux API class  :)
         require_once dirname( __FILE__ ) . '/inc/class.redux_api.php';
@@ -55,11 +43,6 @@ defined( 'ABSPATH' ) || exit;
         // General functions
         require_once dirname( __FILE__ ) . '/inc/class.redux_functions.php';
         require_once dirname( __FILE__ ) . '/inc/class.p.php';
-
-        require_once dirname( __FILE__ ) . '/inc/class.redux_filesystem.php';
-
-        require_once dirname( __FILE__ ) . '/inc/class.redux_admin_notices.php';
-
         // ThemeCheck checks
         require_once dirname( __FILE__ ) . '/inc/themecheck/class.redux_themecheck.php';
 
@@ -210,8 +193,6 @@ defined( 'ABSPATH' ) || exit;
 
                 // Pass parent pointer to function helper.
                 Redux_Functions::$_parent     = $this;
-                Redux_CDN::$_parent           = $this;
-                Redux_Admin_Notices::$_parent = $this;
 
                 // Set values
                 $this->set_default_args();
@@ -320,8 +301,6 @@ defined( 'ABSPATH' ) || exit;
                     // Internataionalization
                     $this->_internationalization();
 
-                    $this->filesystem = Redux_Filesystem::get_instance( $this );
-
                     //set redux upload folder
                     $this->set_redux_content();
 
@@ -359,13 +338,7 @@ defined( 'ABSPATH' ) || exit;
                             add_action( 'admin_init', array( $this, '_update_check' ) );
                         }
                     }
-
-                    // Display admin notices
-                    add_action( 'admin_notices', array( $this, '_admin_notices' ), 99 );
-
-                    // Check for dismissed admin notices.
-                    add_action( 'admin_init', array( $this, '_dismiss_admin_notice' ), 9 );
-
+                    
                     // Enqueue the admin page CSS and JS
                     if ( isset ( $_GET['page'] ) && $_GET['page'] == $this->args['page_slug'] ) {
                         add_action( 'admin_enqueue_scripts', array( $this, '_enqueue' ), 1 );
@@ -408,19 +381,6 @@ defined( 'ABSPATH' ) || exit;
                     if ( $this->args['dev_mode'] == true || Redux_Helpers::isLocalHost() == true ) {
                         require_once 'core/dashboard.php';
 
-                        if ( ! isset ( $GLOBALS['redux_notice_check'] ) ) {
-                            require_once 'core/newsflash.php';
-
-                            $params = array(
-                                'dir_name'    => 'notice',
-                                'server_file' => 'http://www.reduxframework.com/' . 'wp-content/uploads/redux/redux_notice.json',
-                                'interval'    => 3,
-                                'cookie_id'   => 'redux_blast',
-                            );
-
-                            new reduxNewsflash( $this, $params );
-                            $GLOBALS['redux_notice_check'] = 1;
-                        }
                     }
                 }
 
@@ -432,8 +392,6 @@ defined( 'ABSPATH' ) || exit;
                  */
                 do_action( 'redux/loaded', $this );
             }
-
-// __construct()
 
             private function set_redux_content() {
                 $upload_dir        = wp_upload_dir();
@@ -594,14 +552,6 @@ defined( 'ABSPATH' ) || exit;
                     Redux_Functions::updateCheck( self::$_version );
                     $GLOBALS['redux_update_check'] = 1;
                 }
-            }
-
-            public function _admin_notices() {
-                Redux_Admin_Notices::adminNotices( $this->admin_notices );
-            }
-
-            public function _dismiss_admin_notice() {
-                Redux_Admin_Notices::dismissAdminNotice();
             }
 
             /**
@@ -793,12 +743,8 @@ defined( 'ABSPATH' ) || exit;
 
                     // Saving the transient values
                     $this->set_transients();
-
-                    //do_action( "redux-saved-{$this->args['opt_name']}", $value ); // REMOVE
-                    //do_action( "redux/options/{$this->args['opt_name']}/saved", $value, $this->transients['changed_values'] );
                 }
             }
-// set_options()
 
             /**
              * ->get_options(); This is used to get options from the database
@@ -845,7 +791,6 @@ defined( 'ABSPATH' ) || exit;
                 // Set a global variable by the global_variable argument.
                 $this->set_global_variable();
             }
-// get_options()
 
             /**
              * ->get_wordpress_date() - Get Wordpress specific data from the DB and return in a usable array
@@ -854,7 +799,6 @@ defined( 'ABSPATH' ) || exit;
              */
             public function get_wordpress_data( $type = false, $args = array() ) {
                 $data = "";
-//return $data;
                 /**
                  * filter 'redux/options/{opt_name}/wordpress_data/{type}/'
                  *
@@ -1067,7 +1011,6 @@ defined( 'ABSPATH' ) || exit;
 
                 return $data;
             }
-// get_wordpress_data()
 
             /**
              * ->show(); This is used to echo and option value from the options array
@@ -1088,7 +1031,6 @@ defined( 'ABSPATH' ) || exit;
                     echo $this->_get_default( $opt_name, $default );
                 }
             }
-// show()
 
             /**
              * Get the default value for an option
@@ -2663,11 +2605,7 @@ defined( 'ABSPATH' ) || exit;
                     return $plugin_options;
                 }
 
-//                if ($this->transients['last_save_mode'] != 'remove') {
                 $this->transients['last_save_mode'] = "normal"; // Last save mode
-//               } else {
-//                    $this->transients['last_save_mode'] = '';
-//                }
 
                 /**
                  * apply_filters 'redux/validate/{opt_name}/before_validation'
@@ -2766,26 +2704,9 @@ defined( 'ABSPATH' ) || exit;
                     die();
                 }
                 
-                $redux = ReduxFrameworkInstances::get_instance( $_POST['opt_name'] );
-
                 if ( ! empty ( $_POST['data'] ) && ! empty ( $redux->args['opt_name'] ) ) {
 
                     $values = array();
-                    //if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-                    //    $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
-                    //    while (list($key, $val) = each($process)) {
-                    //        foreach ($val as $k => $v) {
-                    //            unset($process[$key][$k]);
-                    //            if (is_array($v)) {
-                    //                $process[$key][stripslashes($k)] = $v;
-                    //                $process[] = &$process[$key][stripslashes($k)];
-                    //            } else {
-                    //                $process[$key][stripslashes($k)] = stripslashes($v);
-                    //            }
-                    //        }
-                    //    }
-                    //    unset($process);
-                    //}
                     $_POST['data'] = stripslashes( $_POST['data'] );
                     parse_str( $_POST['data'], $values );
                     $values = $values[ $redux->args['opt_name'] ];
@@ -2794,20 +2715,6 @@ defined( 'ABSPATH' ) || exit;
                     if ( function_exists( 'get_magic_quotes_gpc' ) && get_magic_quotes_gpc() ) {
                         $values = array_map( 'stripslashes_deep', $values );
                     }
-
-                    //$beforeDeep = $values;
-                    //// Ace editor hack for < PHP 5.4. Oy
-                    //if ( isset( $this->fields['ace_editor'] ) ) {
-                    //    if ( function_exists( 'get_magic_quotes_gpc' ) && get_magic_quotes_gpc() ) {
-                    //        foreach ( $this->fields['ace_editor'] as $id => $v ) {
-                    //            if ( version_compare( phpversion(), '5.4', '<' ) ) {
-                    //                $values[ $id ] = stripslashes( $beforeDeep[ $id ] );
-                    //            } else {
-                    //                $values[ $id ] = $beforeDeep[ $id ];
-                    //            }
-                    //        }
-                    //    }
-                    //}
 
                     if ( ! empty ( $values ) ) {
 

@@ -3915,7 +3915,7 @@ h3.post-title {
 	margin: 0 auto
 }
 
-nav.navbar.bootsnav {
+nav.navbar.bootsnav, nav.navbar.bootsnav .search_btn {
 	background-color: var(--menu-color);
 }
 
@@ -3933,6 +3933,7 @@ nav.navbar.bootsnav ul.nav>li>a {
 	font-size: 18px;
 	padding: 15px
 }
+nav.navbar.bootsnav .search_btn {color: #fff;}
 
 .col-menu-mega>ul>li {
 	list-style-type: none;
@@ -4367,24 +4368,11 @@ nav.navbar.bootsnav.navbar-subcat {
 	border-radius: 3px
 }
 
-.social-connect ul li a {
-	width: 35px;
-	height: 35px;
-	line-height: 35px;
-	margin-bottom: 7px;
-	text-align: center;
-	color: #fff;
-	font-size: 1.5em
-}
-
-
-.archive_news_area>a .img_holder {
-	flex: 1
-}
-
-.archive_news_area>a .post_content {
-	flex: 3;
-	margin-left: 1em
+.social-connect ul li a .fa {
+	font-size: 25px;
+    line-height: 25px;
+    padding: 10px;
+    color: #fff;
 }
 
 .pagination_links {
@@ -4405,44 +4393,6 @@ nav.navbar.bootsnav.navbar-subcat {
 	background-color: #dc3832
 }
 
-.archive_form_area form {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap
-}
-
-.archive_form_area form>div {
-	flex: 1;
-	margin-right: 1.5em
-}
-
-.archive_submit {
-	background-color: #dc3832;
-	padding: .42em 1em;
-	color: #fff;
-	cursor: pointer
-}
-
-.archive_page_title {
-	text-align: center;
-	background-color: #efefef;
-	padding: .5em 0
-}
-
-.archive-news .section-title {
-	background-color: #0b007c;
-	padding: 1em;
-	border-bottom: 0
-}
-
-.archive-news .section-title h2 {
-	color: #fff
-}
-
-.archive-news .post-items {
-	background-color: #f6f6f6
-}
 
 .cat-news-list {
 	flex-wrap: wrap;
@@ -4499,26 +4449,6 @@ nav.navbar.bootsnav.navbar-subcat {
 
 .cat-news-list.more-cat-news .post-item {
 	flex: 0 1 31%
-}
-
-.top-video-area .post-items {
-	flex-wrap: wrap
-}
-
-.top-video-area .post-items .post-item:nth-child(odd) {
-	margin-right: 4%
-}
-
-.top-video-area .post-items .post-item {
-	flex: 0 1 48%
-}
-
-.top-video-area .post-item .title-holder {
-	padding: 7px 0
-}
-
-.top-video {
-	position: relative
 }
 
 .row-item:not(:last-child) {

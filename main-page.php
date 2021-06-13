@@ -8,6 +8,7 @@ defined( 'ABSPATH' ) || exit;
 get_header(); 
 global $ctpress;
 
+
 // $img_size = wp_is_mobile() ? 'medium' : 'medium';
 $img_size = 'medium';
 ?>
@@ -43,7 +44,7 @@ $img_size = 'medium';
           </div>
           <div class="col-md-7 pe-0">
              <div class="img-holder">
-              <?php echo get_the_post_image( 'medium_large' ); ?>
+              <?php echo ctpress_get_post_image( 'medium_large' ); ?>
              </div>
           </div>
            
@@ -69,7 +70,7 @@ $img_size = 'medium';
 
                  <a class="post-item" href="<?php the_permalink()?>">
                     <figure class="img-holder">
-                      <?php echo get_the_post_image( ); ?>
+                      <?php echo ctpress_get_post_image( ); ?>
                     </figure>
                     <?php $topmiddle_lead=get_the_ID(); ?>
                     <div class="post-content p-t-20">                                 
@@ -101,7 +102,7 @@ $img_size = 'medium';
 
                  <a class="post-item" href="<?php the_permalink()?>">
                     <figure class="img-holder">
-                      <?php echo get_the_post_image( ); ?>
+                      <?php echo ctpress_get_post_image( ); ?>
                     </figure>
                     <?php $topright_lead=get_the_ID(); ?>
                     <div class="post-content p-t-20">
@@ -169,7 +170,7 @@ $img_size = 'medium';
        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
           <a class="post-item bg-grey" href="<?php the_permalink()?>">
              <figure class="img-holder">
-              <?php echo get_the_post_image( 'medium' ); ?>
+              <?php echo ctpress_get_post_image( 'medium' ); ?>
              </figure>
              <div class="post-content p-t-20">                        
                 <div class="title-holder">
@@ -219,7 +220,7 @@ $img_size = 'medium';
                    <div class="col-xs-12 col-sm-6 p-t-10">
                       <a class="post-item" href="<?php the_permalink()?>">
                          <figure class="img-holder">
-                          <?php echo get_the_post_image( 'medium_large' ); ?>
+                          <?php echo ctpress_get_post_image( 'medium_large' ); ?>
                          </figure>
                       </a>
                    </div>
@@ -259,7 +260,7 @@ $img_size = 'medium';
                       <div class="col-xs-12 col-sm-6 col-md-3">
                          <a class="post-item bg-grey" href="<?php the_permalink()?>">
                             <figure class="img-holder">
-                              <?php echo get_the_post_image( ); ?>
+                              <?php echo ctpress_get_post_image( ); ?>
                             </figure>
                             <div class="post-content p-t-20">
                                
@@ -317,7 +318,7 @@ $img_size = 'medium';
                    <div class="col-xs-12 col-sm-6 p-t-10">
                       <a class="post-item" href="<?php the_permalink()?>">
                          <figure class="img-holder">
-                          <?php echo get_the_post_image( 'medium_large' ); ?>
+                          <?php echo ctpress_get_post_image( 'medium_large' ); ?>
                          </figure>
                       </a>
                    </div>
@@ -375,7 +376,7 @@ $img_size = 'medium';
                    <div class="col-xs-12 col-md-6 p-t-10">
                       <a class="post-item" href="<?php the_permalink()?>">
                          <figure class="img-holder">
-                            <?php echo get_the_post_image( 'medium_large' ); ?>
+                            <?php echo ctpress_get_post_image( 'medium_large' ); ?>
                          </figure>
                       </a>
                    </div>
@@ -414,7 +415,7 @@ $img_size = 'medium';
                       <div class="col-xs-12 col-sm-6 col-md-3">
                          <a class="post-item bg-grey" href="<?php the_permalink()?>">
                             <figure class="img-holder">
-                              <?php echo get_the_post_image( ); ?>
+                              <?php echo ctpress_get_post_image( ); ?>
                             </figure>
                             <div class="post-content p-t-20">
                                <div class="title-holder">
@@ -470,7 +471,7 @@ $img_size = 'medium';
                       <a class="post-item" href="<?php the_permalink()?>">
                          <figure class="img-holder sidebar-lead me-2 text-center">
 
-                          <?php echo get_the_post_image( ); ?>  
+                          <?php echo ctpress_get_post_image( ); ?>  
 
                          </figure>
                          <div class="pb-4">
@@ -501,7 +502,7 @@ $img_size = 'medium';
 
                       <div class="col-sm-5">
                             <figure class="img-holder">
-                              <?php echo get_the_post_image( 'thumbnail' ); ?>
+                              <?php echo ctpress_get_post_image( 'thumbnail' ); ?>
                             </figure>
                          </div>
                          <div class="col-sm-7">
@@ -563,7 +564,7 @@ $img_size = 'medium';
                 <div class="col-xs-12 col-sm-6 col-md-3">
                    <a class="post-item bg-grey" href="<?php the_permalink()?>">
                       <figure class="img-holder">
-                        <?php echo get_the_post_image(  ); ?>
+                        <?php echo ctpress_get_post_image(  ); ?>
                       </figure>
                       <div class="post-content p-t-20">
                          <div class="title-holder">

@@ -499,44 +499,10 @@ defined( 'ABSPATH' ) || exit;
                     $sysinfo['plugins'][ $plugin_name ] = $plugin_data;
                 }
 
-                $redux = ReduxFrameworkInstances::get_all_instances();
-
+               
                 $sysinfo['redux_instances'] = array();
 
-                if ( ! empty( $redux ) && is_array( $redux ) ) {
-                    foreach ( $redux as $inst => $data ) {
-                        Redux::init( $inst );
-
-                        $sysinfo['redux_instances'][ $inst ]['args']     = $data->args;
-                        $sysinfo['redux_instances'][ $inst ]['sections'] = $data->sections;
-                        foreach ( $sysinfo['redux_instances'][ $inst ]['sections'] as $sKey => $section ) {
-                            if ( isset( $section['fields'] ) && is_array( $section['fields'] ) ) {
-                                foreach ( $section['fields'] as $fKey => $field ) {
-                                    if ( isset( $field['validate_callback'] ) ) {
-                                        unset( $sysinfo['redux_instances'][ $inst ]['sections'][ $sKey ]['fields'][ $fKey ]['validate_callback'] );
-                                    }
-                                    if ( $field['type'] == "js_button" ) {
-                                        if ( isset( $field['script'] ) && isset( $field['script']['ver'] ) ) {
-                                            unset( $sysinfo['redux_instances'][ $inst ]['sections'][ $sKey ]['fields'][ $fKey ]['script']['ver'] );
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-
-                        $sysinfo['redux_instances'][ $inst ]['extensions'] = Redux::getExtensions( $inst );
-
-                        if ( isset( $data->extensions['metaboxes'] ) ) {
-                            $data->extensions['metaboxes']->init();
-                            $sysinfo['redux_instances'][ $inst ]['metaboxes'] = $data->extensions['metaboxes']->boxes;
-                        }
-
-                        if ( isset( $data->args['templates_path'] ) && $data->args['templates_path'] != '' ) {
-                            $sysinfo['redux_instances'][ $inst ]['templates'] = self::getReduxTemplates( $data->args['templates_path'] );
-                        }
-                    }
-                }
+               
 
                 $active_theme = wp_get_theme();
 

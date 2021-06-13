@@ -10,7 +10,7 @@
     }
 
     // This is your option name where all the Redux data is stored.
-    $opt_name = "redux_demo";
+    $opt_name = "ctpress";
 
     /**
      * ---> SET ARGUMENTS

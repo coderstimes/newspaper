@@ -51,5 +51,9 @@ global $ctpress;
 
 <?php get_footer(); ?>
 <script>
-   jQuery('.img-layer-thumb').css('width',jQuery(".rounded")[0].clientWidth);
+   (function($){
+      $(document).ready(function(){
+         $('.img-holder .img-caption').css('width',$(".img-holder img")[0].clientWidth);
+      });      
+   })(jQuery);   
 </script>

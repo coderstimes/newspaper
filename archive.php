@@ -34,7 +34,6 @@ global $ctpress;
                   get_template_part( 'template-parts/content/no', 'content' );
                endif;
                ?>
-            <!-- </div> -->
             </div>
 
             <div class="col-md-4">
