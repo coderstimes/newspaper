@@ -26,20 +26,26 @@ if ( ! function_exists( 'ctpress_menu_search' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'ctpress_site_logo' ) ) :
+if ( ! function_exists( 'ctpress_search_header' ) ) :
 	/**
-	 * Displays the site logo in the header area
+	 * Displays the header title on search results.
 	 */
-	function ctpress_site_logo() {
+	function ctpress_search_header() {
+		?>
 
-		if ( has_custom_logo() ) : ?>
+		<header class="search-header entry-header">
 
-			<div class="site-logo">
-				<?php the_custom_logo(); ?>
-			</div>
+			<h1 class="search-title entry-title">
+				<?php
+				// translators: Search Results title.
+				printf( esc_html__( 'Search Results for: %s', 'dynamico' ), '<span>' . get_search_query() . '</span>' );
+				?>
+			</h1>
+			<?php get_search_form(); ?>
 
-			<?php
-		endif;
+		</header><!-- .search-header -->
+
+		<?php
 	}
 endif;
 
@@ -60,25 +66,6 @@ if ( ! function_exists( 'ctpress_site_title' ) ) :
 			<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
 
 		<?php
-		endif;
-	}
-endif;
-
-
-if ( ! function_exists( 'ctpress_site_description' ) ) :
-	/**
-	 * Displays the site description in the header area
-	 */
-	function ctpress_site_description() {
-
-		$description = get_bloginfo( 'description', 'display' ); /* WPCS: xss ok. */
-
-		if ( $description || is_customize_preview() ) :
-			?>
-
-			<p class="site-description"><?php echo $description; ?></p>
-
-			<?php
 		endif;
 	}
 endif;
@@ -116,7 +103,8 @@ if ( ! function_exists( 'ctpress_archive_header' ) ) :
 			<?php the_archive_title( '<h1 class="archive-title entry-title">', '</h1>' ); ?>
 			<?php the_archive_description( '<div class="archive-description">', '</div>' ); ?>
 
-		</header><!-- .archive-header -->
+		</header>
+		<!-- .archive-header -->
 
 		<?php
 	}
@@ -135,7 +123,7 @@ if ( ! function_exists( 'ctpress_search_header' ) ) :
 			<h1 class="search-title entry-title">
 				<?php
 				// translators: Search Results title.
-				printf( esc_html__( 'Search Results for: %s', 'dynamico' ), '<span>' . get_search_query() . '</span>' );
+				printf( esc_html__( 'Search Results for: %s', 'ctpress' ), '<span>' . get_search_query() . '</span>' );
 				?>
 			</h1>
 			<?php get_search_form(); ?>
@@ -146,97 +134,6 @@ if ( ! function_exists( 'ctpress_search_header' ) ) :
 	}
 endif;
 
-
-if ( ! function_exists( 'ctpress_post_image_archives' ) ) :
-	/**
-	 * Displays the featured image on archive posts.
-	 */
-	function ctpress_post_image_archives() {
-		$image_size = ctpress_get_option( 'blog_image' );
-
-		// Display Post Thumbnail if activated.
-		if ( has_post_thumbnail() && 'hide-image' !== $image_size ) :
-			?>
-
-			<figure class="post-image post-image-archives">
-				<a class="wp-post-image-link" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
-					<?php the_post_thumbnail( $image_size ); ?>
-				</a>
-				<?php if ( wp_get_attachment_caption( get_post_thumbnail_id() ) ) : ?>
-					<figcaption class="wp-caption-text"><?php echo wp_kses_post( wp_get_attachment_caption( get_post_thumbnail_id() ) ); ?></figcaption>
-				<?php endif; ?>
-			</figure>
-
-			<?php
-		endif;
-	}
-endif;
-
-
-if ( ! function_exists( 'ctpress_post_image_single' ) ) :
-	/**
-	 * Displays the featured image on single posts.
-	 */
-	function ctpress_post_image_single() {
-
-		// Display Post Thumbnail if activated.
-		if ( has_post_thumbnail() ) :
-			?>
-
-			<figure class="post-image post-image-single">
-				<?php the_post_thumbnail( ctpress_get_option( 'post_image' ) ); ?>
-
-				<?php if ( wp_get_attachment_caption( get_post_thumbnail_id() ) ) : ?>
-					<figcaption class="wp-caption-text"><?php echo wp_kses_post( wp_get_attachment_caption( get_post_thumbnail_id() ) ); ?></figcaption>
-				<?php endif; ?>
-			</figure><!-- .post-image -->
-
-			<?php
-		endif;
-	}
-endif;
-
-
-if ( ! function_exists( 'ctpress_post_image_page' ) ) :
-	/**
-	 * Displays the featured image on static pages
-	 */
-	function ctpress_post_image_page() {
-		if ( has_post_thumbnail() ) :
-			?>
-
-			<figure class="post-image post-image-single">
-				<?php the_post_thumbnail(); ?>
-
-				<?php if ( wp_get_attachment_caption( get_post_thumbnail_id() ) ) : ?>
-					<figcaption class="wp-caption-text"><?php echo wp_kses_post( wp_get_attachment_caption( get_post_thumbnail_id() ) ); ?></figcaption>
-				<?php endif; ?>
-			</figure><!-- .post-image -->
-
-			<?php
-		endif;
-	}
-endif;
-
-
-if ( ! function_exists( 'ctpress_post_image_featured_content' ) ) :
-	/**
-	 * Displays the featured image in the featured content section.
-	 */
-	function ctpress_post_image_featured_content() {
-		if ( has_post_thumbnail() ) :
-			?>
-
-			<figure class="post-image post-image-featured-content">
-				<a class="wp-post-image-link" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
-					<?php the_post_thumbnail( 'dynamico-featured-content' ); ?>
-				</a>
-			</figure>
-
-			<?php
-		endif;
-	}
-endif;
 
 
 if ( ! function_exists( 'ctpress_entry_meta' ) ) :
@@ -272,9 +169,7 @@ if ( ! function_exists( 'ctpress_entry_date' ) ) :
 			esc_html( get_the_modified_date() )
 		);
 
-		$posted_on = '<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
-
-		return '<span class="posted-on pe-2 float-start" style="border-right: 1px solid #b4adad;"> ' . $posted_on . '</span>';
+		return sprintf( '<span class="posted-on pe-2 float-start"> <a href="%s" rel="bookmark">%s</a> </span>',esc_url( get_permalink() ), $time_string );
 	}
 endif;
 
@@ -288,11 +183,11 @@ if ( ! function_exists( 'ctpress_entry_author' ) ) :
 		$author_string = sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s" rel="author">%3$s</a></span>',
 			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
 			// translators: post author link.
-			esc_attr( sprintf( esc_html__( 'View all posts by %s', 'dynamico' ), get_the_author() ) ),
+			esc_attr( sprintf( esc_html__( 'View all posts by %s', 'ctpress' ), get_the_author() ) ),
 			esc_html( get_the_author() )
 		);
 
-		return '<span class="posted-by px-2 float-start" style="border-right: 1px solid #b4adad;"> ' . $author_string . '</span>';
+		return '<span class="posted-by px-2 float-start" ' . $author_string . '</span>';
 	}
 endif;
 
@@ -302,81 +197,48 @@ if ( ! function_exists( 'ctpress_entry_comments' ) ) :
 	 * Displays the post comments
 	 */
 	function ctpress_entry_comments() {
-		global $ctpress;
-		// Check if comments are open or we have at least one comment.
-		if ( ! ( comments_open() || get_comments_number() ) || $ctpress['comment_option'] ) {
+
+		
+
+		/*Check if comments are open or we have at least one comment.*/
+		if ( ! ( comments_open() || get_comments_number() ) || ctpress_get_option('post-comment') ) {
 			return;
 		}
 
-		// Start Output Buffering.
-		ob_start();
+		if ( ctpress_get_option('comment_option') ) {
+			/*Display facebook comment number*/
+			return sprintf('<span class="entry-comments ps-2 float-start fb-comments-count" data-href="%s"></span>', get_the_permalink() );
+		} else {
+			/*Start Output Buffering.*/
+			ob_start();
 
-		// Display Comments.
-		comments_popup_link(
-			esc_html__( 'No comments', 'dynamico' ),
-			esc_html__( '1 comment', 'dynamico' ),
-			esc_html__( '% comments', 'dynamico' )
-		);
-		$comments = ob_get_contents();
+			/*Display Comments.*/
+			comments_popup_link(
+				esc_html__( 'No comments', 'ctpress' ),
+				esc_html__( '1 comment', 'ctpress' ),
+				esc_html__( '% comments', 'ctpress' )
+			);
+			$comments = ob_get_contents();
 
-		// End Output Buffering.
-		ob_end_clean();
+			// End Output Buffering.
+			ob_end_clean();		
 
-		return '<span class="entry-comments ps-2 float-start"> ' . $comments . '</span>';
-	}
-endif;
+			return '<span class="entry-comments ps-2 float-start"> ' . $comments . '</span>';
 
-
-if ( ! function_exists( 'ctpress_entry_categories' ) ) :
-	/**
-	 * Displays the post categories
-	 */
-	function ctpress_entry_categories() {
-
-		// Return early if post has no category.
-		if ( ! has_category() ) {
-			return;
 		}
 
-		$categories = get_the_category_list( '' );
-
-		echo '<div class="entry-categories"> ' . $categories . '</div>';
+		
 	}
 endif;
 
 
-if ( ! function_exists( 'ctpress_entry_tags' ) ) :
+
+if ( ! function_exists( 'ctpress_read_more_button' ) ) :
 	/**
-	 * Displays the post tags on single post view
+	 * Displays the read more button on posts
 	 */
-	function ctpress_entry_tags() {
-		// Get tags.
-		$tag_list = get_the_tag_list( sprintf( '<span class="entry-tags-label">%s </span>', esc_html__( 'Tagged with', 'dynamico' ) ), ', ' );
-
-		// Display tags.
-		if ( $tag_list ) :
-			echo '<div class="entry-tags">' . $tag_list . '</div>';
-		endif;
-	}
-endif;
-
-
-if ( ! function_exists( 'ctpress_more_link' ) ) :
-	/**
-	 * Displays the more link on posts
-	 */
-	function ctpress_more_link() {
-
-		// Get Read More Text.
-		$read_more = ctpress_get_option( 'read_more_link' );
-
-		if ( '' !== $read_more || is_customize_preview() ) :
-			?>
-
-			<a href="<?php echo esc_url( get_permalink() ); ?>" class="more-link"><?php echo esc_html( $read_more ); ?></a>
-
-			<?php
-		endif;
+	function ctpress_read_more_button() {
+		printf('<a href="%s" class="text-center"> <button type="button" class="readmore btn"> %s </button> </a>',get_the_permalink(), esc_html( 'Read More', 'ctpress' ));
 	}
 endif;
 
@@ -387,14 +249,14 @@ if ( ! function_exists( 'ctpress_post_navigation' ) ) :
 	 */
 	function ctpress_post_navigation() {
 
-		// if ( true === ctpress_get_option( 'post_navigation' ) || is_customize_preview() ) :
+		if ( !ctpress_get_option( 'post-navigation' ) || is_customize_preview() ) :
 
 			the_post_navigation( array(
 				'prev_text' => '<span class="nav-link-text"> ' . esc_html_x( 'Previous Post', 'post navigation', 'ctpress' ) . '</span><h3 class="entry-title">%title</h3>',
 				'next_text' => '<span class="nav-link-text">' . esc_html_x( 'Next Post', 'post navigation', 'ctpress' ) . '</span><h3 class="entry-title">%title</h3>',
 			) );
 
-		// endif;
+		endif;
 	}
 endif;
 
@@ -438,37 +300,26 @@ if ( ! function_exists( 'ctpress_credit_link' ) ) :
 	function ctpress_credit_link() {
 		if ( true === ctpress_get_option( 'credit_link' ) || is_customize_preview() ) :
 			?>
-
-			<span class="credit-link">
-				<?php
-				// translators: Theme Name and Link to ThemeZee.
-				printf( esc_html__( 'WordPress Theme: %1$s by %2$s.', 'dynamico' ),
-					esc_html__( 'Dynamico', 'dynamico' ),
-					'<a href="https://themezee.com/" target="_blank" rel="nofollow">ThemeZee</a>'
-				);
-				?>
-			</span>
+			<div class="sub-footer copyright_credit_link">
+	      <div class="container">
+	         <div class="row">
+	            <div class="col-xs-12 col-sm-5 col-md-5">
+	               <div class="copy"> 
+	               	<?php 
+	               	printf( 
+	               		esc_html__('Copyright &copy; 2021 %s | Powered by %s','ctpress'),
+	               		esc_html__( 'CTPress','ctpress' ),
+	               		'<a href="https://www.facebook.com/coderstime" style="display: inline-block;font-weight: bold;"> CTPress WordPress Theme </a>');
+	               	?> 
+	               </div>
+	            </div>
+	         </div>
+	      </div>
+	   </div>
 
 			<?php
 		endif;
 	}
 endif;
 
-
-if ( ! function_exists( 'ctpress_breadcrumbs' ) ) :
-	/**
-	 * Displays ThemeZee Breadcrumbs plugin
-	 */
-	function ctpress_breadcrumbs() {
-
-		if ( function_exists( 'themezee_breadcrumbs' ) ) {
-
-			themezee_breadcrumbs( array(
-				'before' => '<div class="breadcrumbs-container">',
-				'after'  => '</div>',
-			) );
-
-		}
-	}
-endif;
 

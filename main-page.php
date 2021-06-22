@@ -6,8 +6,6 @@ defined( 'ABSPATH' ) || exit;
  * Template Name: Main Page
  */
 get_header(); 
-global $ctpress;
-
 
 // $img_size = wp_is_mobile() ? 'medium' : 'medium';
 $img_size = 'medium';
@@ -24,7 +22,7 @@ $img_size = 'medium';
                 'post_type'=>'post',
                 'posts_per_page'=>1,
                 'post__in' => get_option( 'sticky_posts' ),
-                'category__in'=> $ctpress['topleft']
+                'category__in'=> ctpress_get_option('topleft')
             ));
            while( $top->have_posts() ) : $top->the_post(); 
         ?>
@@ -34,7 +32,7 @@ $img_size = 'medium';
                <div class="post-content pt-4">
                   <?php $topleft_lead=get_the_ID(); ?>
                   <div class="title-holder">
-                     <h1 class="post-title no-margin"> <?php echo the_title(); ?> </h1>
+                     <h1 class="lead-title no-margin"> <?php echo the_title(); ?> </h1>
                   </div>
                   <div class="post_desc p-t-10">
                      <p> <?php echo  more_excerpt(50); ?> </p>
@@ -63,7 +61,7 @@ $img_size = 'medium';
                          'post_type'=>'post',
                          'posts_per_page'=>1,
                          'post__in' => get_option( 'sticky_posts' ),
-                         'category__in'=>$ctpress['topmiddle']
+                         'category__in'=>ctpress_get_option('topmiddle')
                      ));
                     while($topmiddle->have_posts()) : $topmiddle->the_post();
                  ?>
@@ -95,7 +93,7 @@ $img_size = 'medium';
                          'post_type'=>'post',
                          'posts_per_page'=>1,
                          'post__in' => get_option( 'sticky_posts' ),
-                         'category__in'=>$ctpress['topright']
+                         'category__in'=>ctpress_get_option('topright')
                      ]);
                     while( $topright->have_posts()) : $topright->the_post();
                  ?>
@@ -139,10 +137,10 @@ $img_size = 'medium';
        <div class="col-xs-12">
           <div class="heading_area">
              <div class="heading-border"></div>
-             <div class="section-title more_category">
+             <div class="section-title pb-3 more_category">
                 
                <?php 
-                  $fullbody_cat_ids = (array) $ctpress['fullbody']; 
+                  $fullbody_cat_ids = (array) ctpress_get_option('fullbody'); 
                   echo implode(', ',array_map(function( $id ){
                      return sprintf('<h2><a href="%s">%s</a></h2>', get_category_link( $id ), get_cat_name( $id ) );
                   }, $fullbody_cat_ids));
@@ -159,7 +157,7 @@ $img_size = 'medium';
             'post_type'=>'post',
             'posts_per_page'=>8,
             'post__not_in' => [$topleft_lead,$topmiddle_lead,$topright_lead],
-            'category__in'=>$ctpress['fullbody']
+            'category__in'=>ctpress_get_option('fullbody')
         ]);
        while( $fullbody->have_posts()) : $fullbody->the_post();
     ?>
@@ -194,9 +192,9 @@ $img_size = 'medium';
              <div class="col-xs-12">
                 <div class="heading_area">
                    <div class="heading-border"></div>
-                   <div class="section-title p-b-20 p-t-20 body_one">
-                      <a href="<?php echo esc_url( get_category_link($ctpress['body_one']) ); ?>">
-                         <h2> <?php echo get_cat_name($ctpress['body_one']);?> </h2>
+                   <div class="section-title pb-3 body_one">
+                      <a href="<?php echo esc_url( get_category_link(ctpress_get_option('body_one')) ); ?>">
+                         <h2> <?php echo get_cat_name(ctpress_get_option('body_one'));?> </h2>
                       </a>
                    </div>
                 </div>                        
@@ -211,7 +209,7 @@ $img_size = 'medium';
                         'post_type'=>'post',
                         'posts_per_page'=>1,
                         // 'post__in' => get_option( 'sticky_posts' ),
-                        'category__in'=>$ctpress['body_one']
+                        'category__in'=>ctpress_get_option('body_one')
                     ]);
                    while( $body_one->have_posts()) : $body_one->the_post();
                 ?>
@@ -253,7 +251,7 @@ $img_size = 'medium';
                            'posts_per_page'=>4,
                            'post__not_in' => [$body_one_lead],
                            // 'post__in' => get_option( 'sticky_posts' ),
-                           'category__in'=>$ctpress['body_one']
+                           'category__in'=>ctpress_get_option('body_one')
                        ]);
                       while( $body_one->have_posts()) : $body_one->the_post();
                    ?>
@@ -291,9 +289,9 @@ $img_size = 'medium';
              <div class="col-xs-12">
                 <div class="heading_area">
                    <div class="heading-border"></div>
-                   <div class="section-title p-b-20 p-t-20 body_two">
-                      <a href="<?php echo esc_url( get_category_link($ctpress['body_two']) ); ?>">
-                         <h2> <?php echo get_cat_name($ctpress['body_two']);?> </h2>
+                   <div class="section-title pb-3 body_two">
+                      <a href="<?php echo esc_url( get_category_link(ctpress_get_option('body_two')) ); ?>">
+                         <h2> <?php echo get_cat_name(ctpress_get_option('body_two'));?> </h2>
                       </a>
                    </div>
                 </div>                        
@@ -309,7 +307,7 @@ $img_size = 'medium';
                         'post_type'=>'post',
                         'posts_per_page'=>1,
                         'post__in' => get_option( 'sticky_posts' ),
-                        'category__in'=>$ctpress['body_two'],
+                        'category__in'=>ctpress_get_option('body_two'),
                     ]);
                    while( $body_two->have_posts()) : $body_two->the_post();
                 ?>
@@ -349,9 +347,9 @@ $img_size = 'medium';
              <div class="col-xs-12">
                 <div class="heading_area">
                    <div class="heading-border"></div>
-                   <div class="section-title p-b-20 p-t-20 body_three">
-                      <a href="<?php echo esc_url( get_category_link($ctpress['body_three']) ); ?>">
-                         <h2> <?php echo get_cat_name($ctpress['body_three']);?> </h2>
+                   <div class="section-title pb-3 body_three">
+                      <a href="<?php echo esc_url( get_category_link(ctpress_get_option('body_three')) ); ?>">
+                         <h2> <?php echo get_cat_name(ctpress_get_option('body_three'));?> </h2>
                       </a>
                    </div>
                 </div>                        
@@ -367,7 +365,7 @@ $img_size = 'medium';
                         'post_type'=>'post',
                         'posts_per_page'=>1,
                         // 'post__in' => get_option( 'sticky_posts' ),
-                        'category__in'=>$ctpress['body_three']
+                        'category__in'=>ctpress_get_option('body_three')
                     ]);
                    while( $body_three->have_posts()) : $body_three->the_post();
                 ?>
@@ -408,7 +406,7 @@ $img_size = 'medium';
                            'posts_per_page' =>4,
                            'post__not_in'   =>[$body_three_lead],
                            // 'post__in'    => get_option( 'sticky_posts' ),
-                           'category__in'   =>$ctpress['body_three']
+                           'category__in'   =>ctpress_get_option('body_three')
                        ]);
                       while( $body_three->have_posts()) : $body_three->the_post();
                    ?>
@@ -448,9 +446,9 @@ $img_size = 'medium';
 
           
           <div class="special-feature">
-             <div class="section-title bg-danger right_sidebarcat">
-                <a href="<?php echo esc_url( get_category_link($ctpress['right_sidebarcat']) ); ?>">
-                   <h2> <?php echo get_cat_name($ctpress['right_sidebarcat']);?> </h2>
+             <div class="section-title right_sidebarcat">
+                <a href="<?php echo esc_url( get_category_link(ctpress_get_option('right_sidebarcat')) ); ?>">
+                   <h2> <?php echo get_cat_name(ctpress_get_option('right_sidebarcat'));?> </h2>
                 </a>
              </div>
              <div class="contents">
@@ -463,7 +461,7 @@ $img_size = 'medium';
                               'post_type'=>'post',
                               'posts_per_page'=>1,
                               'post__in' => get_option( 'sticky_posts' ),
-                              'category__in'=>$ctpress['right_sidebarcat']
+                              'category__in'=>ctpress_get_option('right_sidebarcat')
                           ]);
                          while( $right_sidebarcat->have_posts()) : $right_sidebarcat->the_post();
                          $right_sidebarcat_lead = get_the_ID();
@@ -493,7 +491,7 @@ $img_size = 'medium';
                               'post_type'=>'post',
                               'posts_per_page'=>10,
                               'post__not_in' => [$right_sidebarcat_lead],
-                              'category__in'=>$ctpress['right_sidebarcat']
+                              'category__in'=>ctpress_get_option('right_sidebarcat')
                           ]);
                          while( $right_sidebarcat->have_posts()) : $right_sidebarcat->the_post();
                       ?>
@@ -535,9 +533,9 @@ $img_size = 'medium';
        <div class="col-xs-12">
           <div class="heading_area">
              <div class="heading-border"></div>
-             <div class="section-title more_category p-b-20 p-t-20">
+             <div class="section-title more_category pb-3">
                 <?php 
-                   $fullbody_cat_ids = (array) $ctpress['fullbody']; 
+                   $fullbody_cat_ids = (array) ctpress_get_option('fullbody'); 
                    echo implode(', ',array_map(function( $id ){
                       return sprintf('<h2><a href="%s">%s</a></h2>', get_category_link( $id ), get_cat_name( $id ) );
                    }, $fullbody_cat_ids));
@@ -556,7 +554,7 @@ $img_size = 'medium';
                    $fullbody = new WP_Query( [
                         'post_type'=>'post',
                         'posts_per_page'=>4,
-                        'category__in'=>$ctpress['fullbody']
+                        'category__in'=>ctpress_get_option('fullbody')
                     ]);
                    while( $fullbody->have_posts()) : $fullbody->the_post();
                 ?>

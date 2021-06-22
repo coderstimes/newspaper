@@ -6,11 +6,10 @@
  * Displays all of the <head> section and everything up till <div id="content">
  *
  * @version 1.1
- * @package Dynamico
+ * @package Ctpress
  */
 defined( 'ABSPATH' ) || exit;
 
- global $ctpress;
  $theme = wp_get_theme();
  $wp_is_mobile = wp_is_mobile();
 
@@ -24,8 +23,9 @@ defined( 'ABSPATH' ) || exit;
 
    <body <?php body_class('home-page'); ?>>
       <?php do_action( 'wp_body_open' ); ?>
-      
-      <?php do_action( 'dynamico_before_site' ); ?>
+
+      <?php do_action( 'ctpress_before_site' ); ?>
+
       <!-- <div class="se-pre-con"></div> -->
 
       <header>
@@ -34,19 +34,13 @@ defined( 'ABSPATH' ) || exit;
                <div class="row">
 
                   <div class="col-sm-4">
-
                      <?php get_template_part( 'template-parts/header/site', 'social' ); ?>
-
                      <div class="top-left-menu">
-                        <ul>
-                        </ul>
                      </div>
                   </div>
 
                   <div class="col-sm-8 pull-right">
-
                      <?php get_template_part( 'template-parts/header/site', 'top-right' ); ?>
-
                   </div>
                </div>
             </div>
@@ -65,6 +59,8 @@ defined( 'ABSPATH' ) || exit;
                </div>
             </div>
          </div>
+
+         <?php do_action( 'ctpress_before_menu' ); ?>
 
          <nav class="navbar navbar-expand-lg navbar-sticky navbar-mobile bootsnav">
             <div class="top-search">
@@ -97,3 +93,5 @@ defined( 'ABSPATH' ) || exit;
             </div>
          </nav>
       </header>
+
+ <?php do_action( 'ctpress_after_header' ); ?>

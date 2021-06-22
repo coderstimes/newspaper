@@ -4,8 +4,7 @@ defined( 'ABSPATH' ) || exit;
  * The page template file.
  * @package bengal
  */
-get_header(); 
-global $ctpress; 
+get_header();
 
 ?>
       </header>
@@ -20,7 +19,7 @@ global $ctpress;
                      if ( have_posts() ) : 
                         while (have_posts()) : 
                            the_post();
-                           switch ( $ctpress['page-screen'] ) {
+                           switch ( ctpress_get_option('page-screen') ) {
                               case '1':
                                  get_template_part( 'template-parts/page/right', 'sidebar' );
                                  break;
@@ -35,7 +34,7 @@ global $ctpress;
                                  break;
                               
                               default:
-                                 echo "string";
+                                 get_template_part( 'template-parts/page/right', 'sidebar' );
                                  break;
                            }
                            
@@ -53,7 +52,7 @@ global $ctpress;
 <script>
    (function($){
       $(document).ready(function(){
-         $('.img-holder .img-caption').css('width',$(".img-holder img")[0].clientWidth);
+         $('.img-holder .img-caption').css('width',$(".img-holder img")[0].clientWidth);        
       });      
    })(jQuery);   
 </script>

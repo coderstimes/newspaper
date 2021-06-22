@@ -37,7 +37,7 @@ Text Domain: ctpress
     font-size: 22px;
 }
 .page-numbers.current{
-	background: var(--menu-color);
+	background: var(--theme-bg-color);
     color: #fff;
 }
 .pagination .screen-reader-text {
@@ -116,7 +116,6 @@ Text Domain: ctpress
 	font-size: 15px;
 	font-size: 0.9375rem;
 	color: rgba(0, 0, 0, 0.4);
-	color: var(--dynamico--light-text-color);
 }
 
 .comment-meta .comment-metadata a {
@@ -126,14 +125,12 @@ Text Domain: ctpress
 .comment-meta .comment-metadata a:link,
 .comment-meta .comment-metadata a:visited {
 	color: rgba(0, 0, 0, 0.4);
-	color: var(--dynamico--light-text-color);
 	text-decoration: none;
 }
 
 .comment-meta .comment-metadata a:hover,
 .comment-meta .comment-metadata a:active {
 	color: rgba(0, 0, 0, 0.9);
-	color: var(--dynamico--text-color);
 }
 
 .comment-awaiting-moderation {
@@ -214,7 +211,6 @@ Text Domain: ctpress
 .comment-navigation a:hover,
 .comment-navigation a:active {
 	color: rgba(0, 0, 0, 0.9);
-	color: var(--dynamico--text-color);
 }
 
 .comment-navigation .nav-previous a::before {
@@ -252,7 +248,7 @@ Text Domain: ctpress
 }
 
 .comment-form .form-submit .submit{
-	background: var(--menu-color);
+	background: var(--theme-bg-color);
     border: none;
     padding: 10px 20px;
     color: var(--btn-bg-color);
@@ -295,7 +291,6 @@ Text Domain: ctpress
 .post-navigation .nav-links a:link,
 .post-navigation .nav-links a:visited {
 	color: rgba(0, 0, 0, 0.4);
-	color: var(--dynamico--light-text-color);
 	text-decoration: none;
 }
 
@@ -307,13 +302,11 @@ Text Domain: ctpress
 .post-navigation .nav-links a:link .entry-title,
 .post-navigation .nav-links a:visited .entry-title {
 	color: #333;
-	color: var(--dynamico--title-color);
 }
 
 .post-navigation .nav-links a:hover .entry-title,
 .post-navigation .nav-links a:active .entry-title {
 	color: #e84747;
-	color: var(--dynamico--title-hover-color);
 }
 
 .post-navigation .nav-links .nav-link-text {
@@ -384,7 +377,7 @@ Text Domain: ctpress
 .sidebar_widget table tbody tr{}
 .sidebar_widget table tbody tr td{font-size: 18px;}
 .sidebar_widget table tbody tr td a{
-	color: var(--menu-color);
+	color: var(--theme-bg-color);
 }
 
 .sidebar_widget #searchform {

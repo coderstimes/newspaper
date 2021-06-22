@@ -4,16 +4,23 @@ defined( 'ABSPATH' ) || exit;
  * The main template file.
  * @package bengal
  */
-get_header(); 
-global $ctpress;
+get_header();
+
 ?>
 
    </header>
 
    <main class="search_wrapper my-5">
 
+      <?php get_template_part( 'template-parts/breadcrumb/single', 'page' ); ?>
+
       <div class="container">
          <div class="row">
+
+            <div class="col-md-12">
+               <?php ctpress_archive_header(); ?>
+            </div>
+            
             <div class="col-md-8">
 
                <?php
@@ -29,7 +36,7 @@ global $ctpress;
 
             <!-- search sidebar -->
             <div class="col-md-4">
-               <?php get_template_part( 'template-parts/sidebar/category', 'desktop' ); ?>
+               <?php get_template_part( 'template-parts/sidebar/page', 'sidebar' ); ?>
             </div>
 
          </div>

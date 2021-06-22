@@ -425,10 +425,10 @@
                 'subtitle' => __( 'Select a screen option how visible to visitor', 'ctpress' ),
                 'desc'     => __( 'Website posts screen will be show with sidebar or no settings panel. Select a screen option how visible to visito', 'ctpress' ),
                 'options'  => array(
-                    '1' => 'Right Sidebar',
-                    '2' => 'Left Sidebar',
-                    '3' => 'No Sidebar',
-                    '4' => 'Full width',
+                    '1' => esc_html__( 'Right Sidebar' ),
+                    '2' => esc_html__( 'Left Sidebar' ),
+                    '3' => esc_html__( 'No Sidebar' ),
+                    '4' => esc_html__( 'Full width' ),
                 ),
                 'default'  => '1'
             ),
@@ -440,10 +440,10 @@
                 'subtitle' => __( 'Select a page screen option how visible to visitor', 'ctpress' ),
                 'desc'     => __( 'Website page screen will be show with sidebar or no settings panel Select page screen option how visible to visitor', 'ctpress' ),
                 'options'  => array(
-                    '1' => 'Right Sidebar',
-                    '2' => 'Left Sidebar',
-                    '3' => 'No Sidebar',
-                    '4' => 'Full width',
+                    '1' => esc_html__( 'Right Sidebar' ),
+                    '2' => esc_html__( 'Left Sidebar' ),
+                    '3' => esc_html__( 'No Sidebar' ),
+                    '4' => esc_html__( 'Full width' ),
                 ),
                 'default'  => '1'
             ),
@@ -536,7 +536,7 @@
                            <p> Mobile:- <a href="tel:">phone 1</a>, <a href="tel:">phone2</a>, Email: <a href="mailto:info@{$home_url}">info@{$home_url}</a> </p>
 FooterText,
                     'type'  =>'editor',
-                    'id'    =>'site_office_info',
+                    'id'    =>'footer_info',
                     'args'    => array(
                         'wpautop'       => false,
                         'media_buttons' => false,
@@ -562,23 +562,6 @@ FooterText,
                         //'editor_css' => '',
                         'teeny'         => false,
                         //'tinymce' => array(),
-                        'quicktags'     => false,
-                    )
-                ),
-                array(
-                    'title' => __( 'Copyright Text', 'ctpress' ),
-                    'desc'  => __( 'Please edit your copyright text here', 'ctpress' ),
-                    'default' => __( '&copy; 2021, All rights reserved by ', 'ctpress' ) . '<a href="#" style="display: inline-block;font-weight: bold;"> Coders Time </a>',
-                    'type'  =>'editor',
-                    'id'    =>'copyright_text',
-                    'args'    => array(
-                        'wpautop'       => false,
-                        'media_buttons' => false,
-                        'textarea_rows' => 10,
-                        'tabindex' => 1,
-                        'editor_css' => '',
-                        'teeny'         => false,
-                        // 'tinymce' => array(),
                         'quicktags'     => false,
                     )
                 ),

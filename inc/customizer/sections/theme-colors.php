@@ -15,21 +15,21 @@
 function ctpress_customize_register_menu_settings( $wp_customize ) {
 
 	/*Add Sections for Menu Settings.*/
-	$wp_customize->add_section( 'ctpress_section_menu', array(
-		'title'    => esc_html__( 'Menu Settings', 'ctpress' ),
+	$wp_customize->add_section( 'ctpress_section_theme', array(
+		'title'    => esc_html__( 'Theme Colors', 'ctpress' ),
 		'priority' => 40,
 		'panel'    => 'ctpress_options_panel',
-		'capability'  => 'edit_theme_options', //Capability needed to tweak
-		'description' => __('Allows you to customize theme menu background color, font color, search show and hide.', 'ctpress'), //Descriptive tooltip
+		'capability'  => 'edit_theme_options', /*Capability needed to tweak*/
+		'description' => __('Allows you to customize theme color', 'ctpress'), /*//Descriptive tooltip*/
 	) );
 
 	/*Get Default Settings.*/
 	$default = ctpress_default_options();
 
-    /*Menu Background Color*/
+    /*Theme Background Color*/
 	$wp_customize->add_setting(
-		'ctpress[menu_bg_color]', array(
-		  'default' 		  => $default['menu_bg_color'],
+		'ctpress[theme_bg_color]', array(
+		  'default' 		  => $default['theme_bg_color'],
 		  'sanitize_callback' => 'sanitize_hex_color',
 		  'type' 			  => 'option',
 		  'transport'         => 'postMessage',
@@ -38,18 +38,18 @@ function ctpress_customize_register_menu_settings( $wp_customize ) {
 	);  
 
 	$wp_customize->add_control( new WP_Customize_Color_Control( 
-		$wp_customize, 'ctpress[menu_bg_color]', array(
-			'label' 	=> esc_html__( 'Menu background color settings', 'ctpress' ),
-			'section'   => 'ctpress_section_menu',
-			'settings'  => 'ctpress[menu_bg_color]'
+		$wp_customize, 'ctpress[theme_bg_color]', array(
+			'label' 	=> esc_html__( 'Theme background color settings', 'ctpress' ),
+			'section'   => 'ctpress_section_theme',
+			'settings'  => 'ctpress[theme_bg_color]'
 		)
 		)
 	);
 
     /*Menu Font Color*/
 	$wp_customize->add_setting(
-		'ctpress[menu_font_color]', array(
-		  'default' => $default['menu_font_color'],
+		'ctpress[theme_color]', array(
+		  'default' => $default['theme_color'],
 		  'sanitize_callback' => 'sanitize_hex_color',
 		  'type' => 'option',
 		  'transport'         => 'postMessage',
@@ -58,18 +58,18 @@ function ctpress_customize_register_menu_settings( $wp_customize ) {
 	);  
 
 	$wp_customize->add_control( new WP_Customize_Color_Control( 
-		$wp_customize, 'ctpress[menu_font_color]', array(
-			'label' => esc_html__( 'Menu font color settings', 'ctpress' ),
-			'section' => 'ctpress_section_menu',
-			'settings' => 'ctpress[menu_font_color]'
+		$wp_customize, 'ctpress[theme_color]', array(
+			'label' => esc_html__( 'Theme font color settings', 'ctpress' ),
+			'section' => 'ctpress_section_theme',
+			'settings' => 'ctpress[theme_color]'
 		)
 		)
 	); 
 
     /*Menu Font hover Color*/
 	$wp_customize->add_setting (
-		'ctpress[menu_font_hv_clr]', array(
-			'default' 		  => $default['menu_font_hv_clr'],
+		'ctpress[theme_hover_color]', array(
+			'default' 		  => $default['theme_hover_color'],
 			'sanitize_callback' => 'sanitize_hex_color',
 			'type' 			  => 'option',
 			'transport'      	  => 'postMessage',
@@ -78,10 +78,10 @@ function ctpress_customize_register_menu_settings( $wp_customize ) {
 	);  
 
 	$wp_customize->add_control( new WP_Customize_Color_Control(
-		$wp_customize, 'ctpress[menu_font_hv_clr]', array(
-			'label' => esc_html__( 'Menu font hover color settings', 'ctpress' ),
-			'section' => 'ctpress_section_menu',
-			'settings' => 'ctpress[menu_font_hv_clr]'
+		$wp_customize, 'ctpress[theme_hover_color]', array(
+			'label' => esc_html__( 'Theme font hover color settings', 'ctpress' ),
+			'section' => 'ctpress_section_theme',
+			'settings' => 'ctpress[theme_hover_color]'
 		)
 		)
 	);  
@@ -89,8 +89,8 @@ function ctpress_customize_register_menu_settings( $wp_customize ) {
 	/*Add Menu Details Headline.*/
 	$wp_customize->add_control( new ctpress_Customize_Header_Control(
 		$wp_customize, 'menu_settings', array(
-			'label'    => esc_html__( 'Menu Search Option Hide settings', 'ctpress' ),
-			'section'  => 'ctpress_section_menu',
+			'label'    => esc_html__( 'Menu Search Option Hide', 'ctpress' ),
+			'section'  => 'ctpress_section_theme',
 			'settings' => array(),
 			'priority' => 10,
 		)
@@ -106,7 +106,7 @@ function ctpress_customize_register_menu_settings( $wp_customize ) {
 
 	$wp_customize->add_control( 'ctpress[menu_search]', array(
 		'label'    => esc_html__( 'Hide search', 'ctpress' ),
-		'section'  => 'ctpress_section_menu',
+		'section'  => 'ctpress_section_theme',
 		'settings' => 'ctpress[menu_search]',
 		'type'     => 'checkbox',
 		'priority' => 20,

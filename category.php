@@ -5,11 +5,7 @@ defined( 'ABSPATH' ) || exit;
  * @package bengal
  */
 get_header(); 
-global $ctpress;
 
-// echo '<pre>';
-// print_r(get_option('ctpress'));
-// echo "</pre>";
 
 ?>
 

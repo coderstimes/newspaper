@@ -3,19 +3,20 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
- global $ctpress;
-?>
 
-<div class="header-social">
-    <ul>
-       <li><a href="<?php echo $ctpress['facebook'] ?>"><i class="fa fa-facebook"></i></a></li>
-       <li><a href="<?php echo $ctpress['twitter'] ?>"><i class="fa fa-twitter"></i></a></li>
-       <li><a href="<?php echo $ctpress['instagram'] ?>"><i class="fa fa-instagram"></i></a></li>
-       <li class="hidden-xs"><a href="<?php echo $ctpress['linkedin'] ?>"><i class="fa fa-linkedin"></i></a></li>
-       <li class="hidden-xs"><a href="<?php echo $ctpress['youtube'] ?>"><i class="fa fa-youtube-play"></i></a></li>
-    </ul>
- </div> <!-- site social links -->
-
- 
+if ( ! ctpress_get_option('header_social') || is_customize_preview() ) {
+   ?>
+   <div class="header-social">
+       <ul>
+          <li><a href="<?php echo ctpress_get_option('facebook') ?>"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="<?php echo ctpress_get_option('twitter') ?>"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="<?php echo ctpress_get_option('instagram') ?>"><i class="fa fa-instagram"></i></a></li>
+          <li class="hidden-xs"><a href="<?php echo ctpress_get_option('linkedin') ?>"><i class="fa fa-linkedin"></i></a></li>
+          <li class="hidden-xs"><a href="<?php echo ctpress_get_option('youtube') ?>"><i class="fa fa-youtube-play"></i></a></li>
+       </ul>
+   </div> 
+    <!-- site social links -->
+   <?php
+}

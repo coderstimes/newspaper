@@ -14,279 +14,164 @@
  */
 function ctpress_customize_register_post_settings( $wp_customize ) {
 
-	// Add Sections for Post Settings.
+	/*Add Sections for Post Settings.*/
 	$wp_customize->add_section( 'ctpress_section_post', array(
 		'title'    => esc_html__( 'Post Settings', 'ctpress' ),
 		'priority' => 40,
 		'panel'    => 'ctpress_options_panel',
+		'capability'  => 'edit_theme_options', /*Capability needed to tweak*/
+		'description' => __('Allows you to customize post screen', 'ctpress'), /*//Descriptive tooltip*/
 	) );
 
-	// Get Default Settings.
+	/*Get Default Settings.*/
 	$default = ctpress_default_options();
 
-	// Add Post Details Headline.
+	/*Add Setting and Control for showing menu search.*/
+	$wp_customize->add_setting( 'ctpress[post-screen]', array(
+		'default'           => $default['post-screen'],
+		'type'              => 'option',
+		'transport'         => 'postMessage',
+		'sanitize_callback' => 'ctpress_sanitize_select',
+	) );
+
+	$wp_customize->add_control( 'ctpress[post-screen]', array(
+		'label'    => esc_html__( 'Select Post Screen Option', 'ctpress' ),
+		'section'  => 'ctpress_section_post',
+		'settings' => 'ctpress[post-screen]',
+		'type'     => 'select',
+		'priority' => 10,
+		'choices'  => array(
+			1 => esc_html__( 'Right Sidebar' ),
+            2 => esc_html__( 'Left Sidebar' ),
+            3 => esc_html__( 'No Sidebar' ),
+            4 => esc_html__( 'Full width' ),
+		),
+	) );
+
+	/*Add Setting and Control for showing menu search.*/
+	$wp_customize->add_setting( 'ctpress[post-heading]', array(
+		'default'           => $default['post-heading'],
+		'type'              => 'option',
+		'transport'         => 'postMessage',
+		'sanitize_callback' => 'ctpress_sanitize_select',
+	) );
+
+	$wp_customize->add_control( 'ctpress[post-heading]', array(
+		'label'    => esc_html__( 'Select Heading Show Option', 'ctpress' ),
+		'section'  => 'ctpress_section_post',
+		'settings' => 'ctpress[post-heading]',
+		'type'     => 'select',
+		'priority' => 20,
+		'choices'  => array(
+			esc_html__( 'Above Featured Image' ),
+			esc_html__( 'Below Featured Image' ),
+		),
+	) );	
+
+	/*Add Menu Details Headline.*/
 	$wp_customize->add_control( new ctpress_Customize_Header_Control(
-		$wp_customize, 'ctpress_theme_options[post_details_blog]', array(
-			'label'    => esc_html__( 'Post Details on blog and archives', 'ctpress' ),
+		$wp_customize, 'post_img_cap_settings', array(
+			'label'    => esc_html__( 'Featured Image Caption Hide', 'ctpress' ),
 			'section'  => 'ctpress_section_post',
 			'settings' => array(),
-			'priority' => 10,
+			'priority' => 30,
 		)
 	) );
 
-	// Add Setting and Control for showing post date.
-	$wp_customize->add_setting( 'ctpress_theme_options[meta_date]', array(
-		'default'           => $default['meta_date'],
+	/*Add Setting and Control for showing post image caption.*/
+	$wp_customize->add_setting( 'ctpress[post_img_cap]', array(
+		'default'           => $default['post_img_cap'],
 		'type'              => 'option',
 		'transport'         => 'postMessage',
 		'sanitize_callback' => 'ctpress_sanitize_checkbox',
 	) );
 
-	$wp_customize->add_control( 'ctpress_theme_options[meta_date]', array(
-		'label'    => esc_html__( 'Display date', 'ctpress' ),
+	$wp_customize->add_control( 'ctpress[post_img_cap]', array(
+		'label'    => esc_html__( 'Hide Caption', 'ctpress' ),
 		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[meta_date]',
+		'settings' => 'ctpress[post_img_cap]',
 		'type'     => 'checkbox',
-		'priority' => 20,
-	) );
+		'priority' => 32
+	) );	
 
-	// Add Setting and Control for showing post author.
-	$wp_customize->add_setting( 'ctpress_theme_options[meta_author]', array(
-		'default'           => $default['meta_author'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_checkbox',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[meta_author]', array(
-		'label'    => esc_html__( 'Display author', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[meta_author]',
-		'type'     => 'checkbox',
-		'priority' => 30,
-	) );
-
-	// Add Setting and Control for showing post comments.
-	$wp_customize->add_setting( 'ctpress_theme_options[meta_comments]', array(
-		'default'           => $default['meta_comments'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_checkbox',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[meta_comments]', array(
-		'label'    => esc_html__( 'Display comments', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[meta_comments]',
-		'type'     => 'checkbox',
-		'priority' => 40,
-	) );
-
-	// Add Setting and Control for showing post categories.
-	$wp_customize->add_setting( 'ctpress_theme_options[meta_categories]', array(
-		'default'           => $default['meta_categories'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_checkbox',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[meta_categories]', array(
-		'label'    => esc_html__( 'Display categories', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[meta_categories]',
-		'type'     => 'checkbox',
-		'priority' => 50,
-	) );
-
-	// Add Post Details Headline.
+	/*Hide Post Navigation Headline.*/
 	$wp_customize->add_control( new ctpress_Customize_Header_Control(
-		$wp_customize, 'ctpress_theme_options[post_details_single]', array(
-			'label'    => esc_html__( 'Post Details on single posts', 'ctpress' ),
+		$wp_customize, 'post_navigation_settings', array(
+			'label'    => esc_html__( 'Post Navigation Hide', 'ctpress' ),
+			'section'  => 'ctpress_section_post',
+			'settings' => array(),
+			'priority' => 40,
+		)
+	) );
+
+	/*Add Setting and Control for post navigation .*/
+	$wp_customize->add_setting( 'ctpress[post-navigation]', array(
+		'default'           => $default['post-navigation'],
+		'type'              => 'option',
+		'transport'         => 'postMessage',
+		'sanitize_callback' => 'ctpress_sanitize_checkbox',
+	) );
+
+	$wp_customize->add_control( 'ctpress[post-navigation]', array(
+		'label'    => esc_html__( 'Hide Navigation', 'ctpress' ),
+		'section'  => 'ctpress_section_post',
+		'settings' => 'ctpress[post-navigation]',
+		'type'     => 'checkbox',
+		'priority' => 42
+	) );
+
+	/*Hide Post Tags Headline.*/
+	$wp_customize->add_control( new ctpress_Customize_Header_Control(
+		$wp_customize, 'post_tag_settings', array(
+			'label'    => esc_html__( 'Post Tags Hide', 'ctpress' ),
+			'section'  => 'ctpress_section_post',
+			'settings' => array(),
+			'priority' => 50,
+		)
+	) );
+
+	/*Add Setting and Control for post tags.*/
+	$wp_customize->add_setting( 'ctpress[post-tags]', array(
+		'default'           => $default['post-tags'],
+		'type'              => 'option',
+		'transport'         => 'postMessage',
+		'sanitize_callback' => 'ctpress_sanitize_checkbox',
+	) );
+
+	$wp_customize->add_control( 'ctpress[post-tags]', array(
+		'label'    => esc_html__( 'Hide Tags', 'ctpress' ),
+		'section'  => 'ctpress_section_post',
+		'settings' => 'ctpress[post-tags]',
+		'type'     => 'checkbox',
+		'priority' => 52
+	) );
+
+	/*Hide Post Comment.*/
+	$wp_customize->add_control( new ctpress_Customize_Header_Control(
+		$wp_customize, 'post_comment_settings', array(
+			'label'    => esc_html__( 'Post Comment Hide', 'ctpress' ),
 			'section'  => 'ctpress_section_post',
 			'settings' => array(),
 			'priority' => 60,
 		)
 	) );
 
-	// Add Setting and Control for showing post date.
-	$wp_customize->add_setting( 'ctpress_theme_options[single_meta_date]', array(
-		'default'           => $default['single_meta_date'],
+	/*Add Setting and Control for post comment.*/
+	$wp_customize->add_setting( 'ctpress[post-comment]', array(
+		'default'           => $default['post-comment'],
 		'type'              => 'option',
 		'transport'         => 'postMessage',
 		'sanitize_callback' => 'ctpress_sanitize_checkbox',
 	) );
 
-	$wp_customize->add_control( 'ctpress_theme_options[single_meta_date]', array(
-		'label'    => esc_html__( 'Display date', 'ctpress' ),
+	$wp_customize->add_control( 'ctpress[post-comment]', array(
+		'label'    => esc_html__( 'Hide Comment', 'ctpress' ),
 		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[single_meta_date]',
+		'settings' => 'ctpress[post-comment]',
 		'type'     => 'checkbox',
-		'priority' => 70,
+		'priority' => 62
 	) );
 
-	// Add Setting and Control for showing post author.
-	$wp_customize->add_setting( 'ctpress_theme_options[single_meta_author]', array(
-		'default'           => $default['single_meta_author'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_checkbox',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[single_meta_author]', array(
-		'label'    => esc_html__( 'Display author', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[single_meta_author]',
-		'type'     => 'checkbox',
-		'priority' => 80,
-	) );
-
-	// Add Setting and Control for showing post comments.
-	$wp_customize->add_setting( 'ctpress_theme_options[single_meta_comments]', array(
-		'default'           => $default['single_meta_comments'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_checkbox',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[single_meta_comments]', array(
-		'label'    => esc_html__( 'Display comments', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[single_meta_comments]',
-		'type'     => 'checkbox',
-		'priority' => 90,
-	) );
-
-	// Add Settings and Controls for post layout.
-	$wp_customize->add_setting( 'ctpress_theme_options[post_layout]', array(
-		'default'           => $default['post_layout'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_select',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[post_layout]', array(
-		'label'    => esc_html__( 'Single Post Layout', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[post_layout]',
-		'type'     => 'select',
-		'priority' => 100,
-		'choices'  => array(
-			'above-title' => esc_html__( 'Featured image above title', 'ctpress' ),
-			'below-title' => esc_html__( 'Featured image below title', 'ctpress' ),
-			'no-image'    => esc_html__( 'Hide Image', 'ctpress' ),
-		),
-	) );
-
-	// Add Settings and Controls for blog image.
-	$wp_customize->add_setting( 'ctpress_theme_options[post_image]', array(
-		'default'           => $default['post_image'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_select',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[post_image]', array(
-		'label'    => esc_html__( 'Single Post Image', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[post_image]',
-		'type'     => 'select',
-		'priority' => 110,
-		'choices'  => array(
-			'ctpress-ultra-wide' => esc_html__( 'Ultra Wide (3:1)', 'ctpress' ),
-			'ctpress-landscape'  => esc_html__( 'Landscape (16:9)', 'ctpress' ),
-			'ctpress-classic'    => esc_html__( 'Classic (4:3)', 'ctpress' ),
-			'post-thumbnail'      => esc_html__( 'Flexible Height', 'ctpress' ),
-		),
-	) );
-
-	// Add Partial for Blog Layout and Excerpt Length.
-	$wp_customize->selective_refresh->add_partial( 'ctpress_single_post_partial', array(
-		'selector'         => '.single-post .site-main',
-		'settings'         => array(
-			'ctpress_theme_options[post_layout]',
-			'ctpress_theme_options[post_image]',
-		),
-		'render_callback'  => 'ctpress_customize_partial_single_post',
-		'fallback_refresh' => false,
-	) );
-
-	// Add Single Post Headline.
-	$wp_customize->add_control( new ctpress_Customize_Header_Control(
-		$wp_customize, 'ctpress_theme_options[single_post]', array(
-			'label'    => esc_html__( 'Single Post Footer', 'ctpress' ),
-			'section'  => 'ctpress_section_post',
-			'settings' => array(),
-			'priority' => 120,
-		)
-	) );
-
-	// Add Setting and Control for showing post tags.
-	$wp_customize->add_setting( 'ctpress_theme_options[meta_tags]', array(
-		'default'           => $default['meta_tags'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_checkbox',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[meta_tags]', array(
-		'label'    => esc_html__( 'Display tags', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[meta_tags]',
-		'type'     => 'checkbox',
-		'priority' => 140,
-	) );
-
-	// Add Setting and Control for showing post categories.
-	$wp_customize->add_setting( 'ctpress_theme_options[single_meta_categories]', array(
-		'default'           => $default['single_meta_categories'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_checkbox',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[single_meta_categories]', array(
-		'label'    => esc_html__( 'Display categories', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[single_meta_categories]',
-		'type'     => 'checkbox',
-		'priority' => 150,
-	) );
-
-	// Add Setting and Control for showing post navigation.
-	$wp_customize->add_setting( 'ctpress_theme_options[post_navigation]', array(
-		'default'           => $default['post_navigation'],
-		'type'              => 'option',
-		'transport'         => 'postMessage',
-		'sanitize_callback' => 'ctpress_sanitize_checkbox',
-	) );
-
-	$wp_customize->add_control( 'ctpress_theme_options[post_navigation]', array(
-		'label'    => esc_html__( 'Display previous/next post navigation', 'ctpress' ),
-		'section'  => 'ctpress_section_post',
-		'settings' => 'ctpress_theme_options[post_navigation]',
-		'type'     => 'checkbox',
-		'priority' => 160,
-	) );
 }
 add_action( 'customize_register', 'ctpress_customize_register_post_settings' );
 
-
-/**
- * Render single posts partial
- */
-function ctpress_customize_partial_single_post() {
-	while ( have_posts() ) :
-		the_post();
-
-		get_template_part( 'template-parts/post/content', esc_html( ctpress_get_option( 'post_layout' ) ) );
-
-		ctpress_post_navigation();
-		ctpress_related_posts();
-
-		// If comments are open or we have at least one comment, load up the comment template.
-		if ( comments_open() || get_comments_number() ) :
-			comments_template();
-		endif;
-
-	endwhile;
-}

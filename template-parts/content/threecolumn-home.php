@@ -3,7 +3,7 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
    $mobile = wp_is_mobile();
    $img_size = $mobile ? 'medium' : 'medium';
@@ -23,10 +23,13 @@
 <?php echo ( $row_num % 3 == 0 ) ? '<div class="row py-5 br-bottom">' : '';  ?>
 
    <div class="col-md-4 <?php echo ( $row_num % 3 == 0 ) ? $margin_bottom : '' ; ?>">
-      <figure class="img-holder text-center">
-         <?php echo ctpress_get_post_image( $img_size ); ?>
-      </figure>
 
+      <a href="<?php the_permalink(); ?>">
+         <figure class="img-holder text-center">
+            <?php echo ctpress_get_post_image( $img_size ); ?>
+         </figure>
+      </a>
+      
       <div class="mt-3">
          <div class="title-holder">
             <strong>
@@ -35,11 +38,7 @@
                </h2>
             </strong>
             <p class="brief my-3"> <?php echo  more_content(30); ?> </p>
-            <a href="<?php the_permalink();?>" class="text-center"> 
-               <button style="font-size: 18px;font-weight: bold;width: 200px;" type="button" class="readmore btn"> 
-                  <?php esc_html_e( 'Read More', 'ctpress' ); ?> 
-               </button>
-            </a>
+            <?php ctpress_read_more_button(); ?>
          </div>
       </div>
       

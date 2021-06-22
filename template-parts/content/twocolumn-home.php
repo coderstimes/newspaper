@@ -3,7 +3,7 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
    $mobile = wp_is_mobile();
    $img_size = $mobile ? 'medium' : 'medium';
@@ -18,8 +18,8 @@
            $toplead= new WP_Query(array(
                 'post_type'=>'post',
                 'posts_per_page' => 1,
-                // 'post__in' => get_option( 'sticky_posts' ),
-                // 'category__in'=> $ctpress['topleft']
+                'post__in' => get_option( 'sticky_posts' ) ?: '',
+                'category__in'=> ctpress_get_option('topleft')
             ));
            while( $toplead->have_posts() ) : $toplead->the_post(); 
         ?>
@@ -35,7 +35,7 @@
                      <h1 class="post-title no-margin"> <?php echo the_title(); ?> </h1>
                   </div>
                   <div class="post_desc p-t-10">
-                     <p> <?php echo more_excerpt(50); ?> </p>
+                     <p> <?php echo more_content(50); ?> </p>
                   </div>
                </div>
              </a>
@@ -58,10 +58,13 @@
 <?php echo ( $row_num % 2 == 0 ) ? '<div class="row py-5 br-bottom">' : '';  ?>
 
    <div class="col-md-6 <?php echo ( $row_num % 2 == 0 ) ? $margin_bottom : '' ; ?>">
-      <figure class="img-holder text-center">
-         <?php echo ctpress_get_post_image( $img_size ); ?>
-      </figure>
 
+      <a href="<?php the_permalink(); ?>">
+         <figure class="img-holder text-center">
+            <?php echo ctpress_get_post_image( $img_size ); ?>
+         </figure>
+      </a>
+      
       <div class="mt-3">
          <div class="title-holder">
             <strong>
@@ -70,11 +73,7 @@
                </h2>
             </strong>
             <p class="brief my-3"> <?php echo  more_content(30); ?> </p>
-            <a href="<?php the_permalink();?>" class="text-center"> 
-               <button style="font-size: 18px;font-weight: bold;width: 200px;" type="button" class="readmore btn"> 
-                  <?php esc_html_e( 'Read More', 'ctpress' ); ?> 
-               </button>
-            </a>
+            <?php ctpress_read_more_button(); ?>
          </div>
       </div>
       

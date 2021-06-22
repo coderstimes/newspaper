@@ -14,11 +14,15 @@
 }
 
 :root {
-    --bg-color: #f4c900;
-    --menu-color: #dfad10;
-    --btn-bg-color: #eaeff3;
-    --btn-color: #000;
+    --theme-bg-color: #f4c900;
+    --theme-color: #363535;
+    --theme-hover-color: #111;
+    --theme-h-color: #363535;
+    --theme-p-color: #363535;
+    --theme-a-color: #101010;
+    --heading-color: #111;
 }
+
 
 body {
 	font-family: source sans pro, sans-serif;
@@ -40,7 +44,7 @@ body {
 }
 
 body.boxed-layout {
-	background: #f7f7f7 url(../images/boxed-bg.jpg) no-repeat;
+	background: #f7f7f7;
 	background-position: center 0;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -56,7 +60,8 @@ body.boxed-layout .wrapper {
 }
 
 p {
-	font-size: 16px
+	font-size: 16px;
+	color: var(--theme-p-color);
 }
 
 h1,
@@ -68,21 +73,9 @@ h6 {
 	font-family: roboto, sans-serif
 }
 
-a {
-	-webkit-transition: all .3s;
-	-moz-transition: all .3s;
-	-ms-transition: all .3s;
-	-o-transition: all .3s;
-	transition: all .3s
-}
-
 a:hover {
-	color: #eb0254;
+	color: var(--theme-home-color);
 	text-decoration: none
-}
-
-.m_0 {
-	margin: 0!important
 }
 
 .row-m {
@@ -102,15 +95,22 @@ h3,
 h4,
 h5,
 h6,
-a,
-p {
-	color: #111
+{
+	color: var(--heading-color);
 }
 
 a {
 	text-decoration: none;
-	display: block
+	display: block;
+	color: var(--theme-a-color);
 }
+
+/*heading color*/
+.title-holder .post-title{color: var(--heading-color);}
+.page_main_wrapper li a {
+	color: var(--heading-color);
+}
+#navbar-menu li.cat_name a {color: var(--theme-color);}
 
 .featured-inner,
 .post-body,
@@ -3006,7 +3006,7 @@ footer {
 }
 
 .sub-footer {
-	background-color: #b98e06;
+	background-color: var(--theme-bg-color);
 	padding: 10px 0;
 	color: #fff
 }
@@ -3075,7 +3075,6 @@ footer {
 }
 
 .breadcrumb>.active {
-	color: #37a000;
 	font-weight: 700
 }
 
@@ -3916,7 +3915,7 @@ h3.post-title {
 }
 
 nav.navbar.bootsnav, nav.navbar.bootsnav .search_btn {
-	background-color: var(--menu-color);
+	background-color: var(--theme-bg-color);
 }
 
 nav.navbar.bootsnav ul.nav>li {
@@ -3929,7 +3928,7 @@ nav.navbar.bootsnav ul.nav>li {
 }
 
 nav.navbar.bootsnav ul.nav>li>a {
-	color: #fff;
+	color: var(--theme-color);
 	font-size: 18px;
 	padding: 15px
 }
@@ -3991,12 +3990,12 @@ nav.navbar.bootsnav.navbar-subcat {
 	height: 100%;
 	border-top: 25px solid #ffffff;
     border-bottom: 25px solid #ffffff;
-    border-left: 25px solid var(--bg-color);
+    border-left: 25px solid var(--theme-bg-color);
 }
 
 .navbar-subcat ul.nav>li:first-child>a {
 	font-size: 2em;
-	background-color: var(--bg-color);
+	background-color: var(--theme-bg-color);
 	padding: 1px 20px;
 	margin-right: 25px
 }
@@ -4043,7 +4042,7 @@ nav.navbar.bootsnav.navbar-subcat {
 
 .lead-news {
 	min-height: 215px;
-	background-color: var(--menu-color);
+	background-color: var(--theme-bg-color);
 }
 
 .lead-news .post-content {
@@ -4111,6 +4110,7 @@ nav.navbar.bootsnav.navbar-subcat {
 	text-align: center;
 	font-size: 24px
 }
+.section-title h2,.section-title h2 a {color: var(--theme-h-color);}
 
 .section-title.more_category h2 {
 	margin:0px;
@@ -4605,9 +4605,9 @@ nav.navbar.bootsnav.navbar-subcat {
 	position: absolute;
 	left:0;
 	right: 0;
-	bottom: 0;
+	bottom:0;
 	margin: 0 auto;
-	background: rgba(27, 54, 47, .5);
+	background-color: var(--heading-color);
 	padding: .5em .3em;
 	color: #fff!important;
 	font-weight: 600;
@@ -4620,8 +4620,10 @@ nav.navbar.bootsnav.navbar-subcat {
 	font-size: 38px;
 	line-height: 40px;
 	padding-bottom: .5em;
-	font-weight: 400
+	font-weight: 400;
+	color: var(--headig-color);
 }
+.single-post-content 
 
 .edited-item .item:last-child {
 	border: none
@@ -5041,20 +5043,36 @@ nav.navbar.bootsnav.navbar-subcat {
 /*single page content style*/
 .content_area {
 	width: fit-content;
-	margin: 0 auto;
+	margin: 20px auto;
 }
 .content_area p{
 	font-size: 18px;
+	color: var(--theme-p-color);
 }
 /*single page content style*/
 
 /*read more button design*/
 button.readmore {
 	background-color: var(--btn-bg-color);
+	font-size: 18px;
+    font-weight: bold;
+    width: 200px;
 }
 
 /*homepage right_sidebarcat design*/
+.special-feature .right_sidebarcat {
+	background-color: var(--theme-bg-color);
+}
+.special-feature .right_sidebarcat a, .special-feature .right_sidebarcat h2{
+	color: var(--theme-color);
+}
 .special-feature .sidebar-lead img{
 	max-height: 200px;
 }
 
+
+/*post_info*/
+.post_info {}
+.post_info .entry-meta {}
+.post_info .entry-meta span{border-right: 1px solid #b4adad;}
+.post_info .entry-meta span:last-child{border-right: none;}

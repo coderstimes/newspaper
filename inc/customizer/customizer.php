@@ -16,9 +16,11 @@ final class CTPressCustomizer {
 		require( get_template_directory() . '/inc/customizer/controls/headline-control.php' );
 
 		/*Load Customizer Sections.*/
-		require( get_template_directory() . '/inc/customizer/sections/website-settings.php' );
-		require( get_template_directory() . '/inc/customizer/sections/menu-settings.php' );
+		require( get_template_directory() . '/inc/customizer/sections/theme-colors.php' );
+		require( get_template_directory() . '/inc/customizer/sections/comment-settings.php' );
 		require( get_template_directory() . '/inc/customizer/sections/post-settings.php' );
+		require( get_template_directory() . '/inc/customizer/sections/page-settings.php' );
+		require( get_template_directory() . '/inc/customizer/sections/social-link-settings.php' );
 		require( get_template_directory() . '/inc/customizer/sections/footer-settings.php' );
 
 		add_action( 'customize_register', [$this,'ctpress_customize_register'] );
@@ -59,7 +61,7 @@ final class CTPressCustomizer {
 	 */
 	public function ctpress_customize_js() 
 	{
-		wp_enqueue_script( 'ctpress-customize-preview', get_template_directory_uri() . '/assets/js/customize-preview.js', array( 'customize-preview' ), time(), true );
+		wp_enqueue_script( 'ctpress-customize-preview', get_template_directory_uri() . '/assets/js/customize-preview.js', array( 'customize-preview' ), '1.0.0', true );
 	}
 
 
@@ -68,7 +70,7 @@ final class CTPressCustomizer {
 	 */
 	public function ctpress_customizer_js() 
 	{
-		wp_enqueue_script( 'ctpress-customizer-controls', get_template_directory_uri() . '/assets/js/customizer-controls.js', array(), time(), true );
+		wp_enqueue_script( 'ctpress-customizer-controls', get_template_directory_uri() . '/assets/js/customizer-controls.js', array(), '1.0.0', true );
 	}
 
 
@@ -77,7 +79,7 @@ final class CTPressCustomizer {
 	 */
 	public function ctpress_customizer_css() 
 	{
-		wp_enqueue_style( 'ctpress-customizer-controls', get_template_directory_uri() . '/assets/css/customizer-controls.css', array(), time() );
+		wp_enqueue_style( 'ctpress-customizer-controls', get_template_directory_uri() . '/assets/css/customizer-controls.css', array(), '1.0.0' );
 	}
 
 	/**
@@ -94,9 +96,9 @@ final class CTPressCustomizer {
       <style type="text/css">
            <?php
            $data = [
-           	'menu_bg_color' => ['background-color','nav.navbar.bootsnav, .attr-nav .search_btn'],
-           	'menu_font_color' => ['color','nav.navbar.bootsnav, .attr-nav .search_btn'],
-           	'menu_font_hv_clr' => ['hover','nav.navbar.bootsnav, .attr-nav .search_btn'],
+           	'theme_bg_color' => ['--theme-bg-color',':root'],
+           	'theme_color' => ['--theme-color',':root'],
+           	'theme_hover_color' => ['--theme-hover-color',':root'],
            ];
            self::generate_css( $data ); 
            ?> 

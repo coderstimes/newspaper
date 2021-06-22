@@ -5,8 +5,7 @@ defined( 'ABSPATH' ) || exit;
  * @package bengal
  * Template Name: Two column Home
  */
-get_header(); 
-global $ctpress;
+get_header();
 ?>
 
    </header>

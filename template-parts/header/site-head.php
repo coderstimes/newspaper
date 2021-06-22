@@ -3,10 +3,11 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
-global $ctpress;
+
 ?>
+
 
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,5 +17,5 @@ global $ctpress;
 <meta name="robots" content="all" />
 <meta name="googlebot" content="all" />
 <meta name="googlebot-news" content="all" />
-<link rel="shortcut icon" type="image/png" href="<?php echo $ctpress['favicon']['url'];?>" />
+<link rel="shortcut icon" type="image/png" href="<?php echo ctpress_get_option('favicon')['url'];?>" />
 

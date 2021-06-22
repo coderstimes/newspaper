@@ -3,54 +3,43 @@ defined( 'ABSPATH' ) || exit;
 /**
  * The template for displaying the footer.
  * Contains the closing of the #content div and all content after
- * @package beautinhealth
+ * @package ctpress
  */
-global $ctpress;
 ?>
 
-      <footer>
-         <div class="container">
-            <div class="row">
-               <div class="col-sm-4 footer-box">
-                  <div class="about-inner">
-                     <img src="<?php echo $ctpress['footer_logo']['url'] ? : $ctpress['logo']['url'] ?>" class="img-responsive" alt="<?php echo get_bloginfo( 'name' ) . ' logo'; ?>" />
-                     <ul>
-                        <?php echo $ctpress['footer_logo_bottom'];?>
-                     </ul>
-                  </div>
-               </div>
-               <div class="col-sm-4 footer-box">
-                  <div class="about-inner address">
-                     <ul>
-                        <li>
-                          <?php echo $ctpress['site_office_info'];?>                           
-                        </li>
-                     </ul>                     
-                  </div>
-               </div>
-               <div class="col-sm-4 footer-box">
-                  <div class="social-connect">
-                        <ul class="social--redius social--color text-center">
-                           <li><a data-fb="fb_link" class="social__facebook" title="Facebook" href="<?php echo $ctpress['facebook'];?>"><i class="fa fa-facebook"></i></a></li>
-                           <li><a data-twitter="twitter_link" class="social__twitter" title="Twitter" href="<?php echo $ctpress['twitter'];?>"><i class="fa fa-twitter"></i></a></li>
-                           <li><a data-youtube="youtube_link" class="social__youtube" title="Youtube" href="<?php echo $ctpress['youtube'];?>"><i class="fa fa-youtube"></i></a></li>
-                           <li><a data-linkedin="linkedin_link" class="social__linkedin" title="Linkedin" href="<?php echo $ctpress['linkedin'];?>"><i class="fa fa-linkedin"></i></a></li>
-                           <li><a data-instagram="instagram_link" class="social__instagram" title="Instagram" href="<?php echo $ctpress['instagram'];?>"><i class="fa fa-instagram"></i></a></li>
-                        </ul>
-                     </div>
-               </div>
+<?php do_action( 'ctpress_before_footer' ); ?>
+
+<footer>
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-4 footer-box">
+            <div class="about-inner">
+               <img src="<?php echo ctpress_get_option('footer_logo')['url'] ? : ctpress_get_option('logo')['url'] ?>" class="img-responsive" alt="<?php echo get_bloginfo( 'name' ) . ' logo'; ?>" />
+               <ul>
+                  <?php echo ctpress_get_option('footer_logo_bottom');?>
+                  <?php echo ctpress_get_option('footer_text');?>
+               </ul>
             </div>
          </div>
-         <div class="sub-footer">
-            <div class="container">
-               <div class="row">
-                  <div class="col-xs-12 col-sm-5 col-md-5">
-                     <div class="copy"> <?php echo $ctpress['copyright_text'];?> </div>
-                  </div>
-               </div>
+         <div class="col-sm-4 footer-box">
+            <div class="about-inner address">
+               <ul>
+                  <li>
+                    <?php echo ctpress_get_option('footer_info');?>                          
+                  </li>
+               </ul>                     
             </div>
          </div>
-      </footer>
+         <div class="col-sm-4 footer-box">
+            <?php get_template_part( 'template-parts/footer/site', 'social' ); ?>
+         </div>
+      </div>
+   </div>
+   <!-- show credit link info -->
+   <?php ctpress_credit_link(); ?>
+</footer>
+
+<?php do_action( 'ctpress_after_footer' ); ?>
       
       <script async >
          (function( $ ){

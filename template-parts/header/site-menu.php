@@ -3,7 +3,7 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
 
 if ( has_nav_menu( 'main_menu' ) ) :

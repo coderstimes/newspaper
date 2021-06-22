@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || exit;
  * @package bengal
  */
 get_header(); 
-global $ctpress;
 $img_size = wp_is_mobile() ? 'medium_large' : 'full';
  
 ?>
@@ -27,7 +26,7 @@ $img_size = wp_is_mobile() ? 'medium_large' : 'full';
                      the_post();
                      setPostViews( get_the_ID() );  
 
-                     switch ( $ctpress['post-screen'] ) {
+                     switch ( ctpress_get_option('post-screen') ) {
                         case '1':
                            get_template_part( 'template-parts/posts/right', 'sidebar' );
                            break;
@@ -62,12 +61,21 @@ $img_size = wp_is_mobile() ? 'medium_large' : 'full';
    (function($){
       $(document).ready(function(){
          $('.img-holder .img-caption').css('width',$(".img-holder img")[0].clientWidth);
-      });      
+      });
+
+      function fb_comments_func() {
+         var fb_comments_count = $(".fb_comments_count");
+         fb_comments_count.append( fb_comments_count.text()> 1 ? ' Commments' : ' Comment');
+         if ( fb_comments_count.text().length < 1 ) {
+            setTimeout(fb_comments_func, 1000);
+         }
+      }
+      setTimeout(fb_comments_func, false);  
    })(jQuery);   
 </script>
 
-<?php  if ( $ctpress['comment_option'] ) : ?>
+<?php  if ( ctpress_get_option('comment_option')) : ?>
 
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=<?php echo $ctpress['fb_appId'] ? : '492209628792946';?>&autoLogAppEvents=1" nonce="YLjsSwmz"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=<?php echo ctpress_get_option('fb_appId')? : '492209628792946';?>&autoLogAppEvents=1" nonce="YLjsSwmz"></script>
 
 <?php endif; ?>

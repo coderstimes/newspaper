@@ -56,3 +56,30 @@ function ctpress_sanitize_footer_text( $value ) {
 		return stripslashes( wp_filter_post_kses( addslashes( $value ) ) );
 	endif;
 }
+
+
+/**
+ *  Sanitize footer content textarea
+ *
+ * @param String $value / Value of the setting.
+ * @return string
+ */
+function ctpress_sanitize_html_text ( $value ) {
+    return wp_kses( $value, array( 
+        'a' => array(
+            'href' => array(),
+            'title' => array()
+        ),
+        'br' => array(),
+        'em' => array(),
+        'strong' => array(),
+        'h2' => array(),
+        'h3' => array(),
+        'h4' => array(),
+        'h5' => array(),
+        'h6' => array(),
+        'p' => array(),
+    ) );
+}
+
+

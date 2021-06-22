@@ -3,11 +3,10 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
 ?>
 
-<?php get_template_part( 'template-parts/sidebar/latest', 'popular' ); ?>
 
 <?php 
 

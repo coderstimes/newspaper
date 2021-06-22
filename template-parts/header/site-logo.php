@@ -3,15 +3,14 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
-global $ctpress;
-$date_time = isset( $ctpress['date-show'] ) && $ctpress['date-show'] == 0 ? '' : date('l, d F Y') ;
+$date_time = ctpress_get_option('date-show') == 0 ? '' : date('l, d F Y') ;
 ?>
 
 <div class="logo">
   <a href="<?php echo  home_url(); ?>">
-     <img src="<?php echo $ctpress['logo']['url'] ?>" class="logo" alt="<?php echo get_bloginfo( 'name' ) . ' logo'; ?>">
+     <img src="<?php echo ctpress_get_option('logo')['url'] ?>" class="logo" alt="<?php echo get_bloginfo( 'name' ) . ' logo'; ?>">
   </a>
 
 

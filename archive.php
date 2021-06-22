@@ -5,11 +5,10 @@
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
 
 get_header();
-global $ctpress;
 
 ?>
 

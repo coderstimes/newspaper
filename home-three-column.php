@@ -7,10 +7,6 @@ defined( 'ABSPATH' ) || exit;
  */
 get_header();
 
-// echo '<pre>';
-// print_r($ctpress);
-// echo '</pre>';
-
 ?>
 
    </header>

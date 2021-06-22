@@ -26,8 +26,8 @@ if ( ! function_exists( 'ctpress_theme_functions' ) ) :
         /*Add default posts and comments RSS feed links to head.*/
         add_theme_support( 'automatic-feed-links' );
     	add_theme_support( 'title-tag' );
-        add_theme_support( 'custom-logo' );
-        add_theme_support( 'custom-background' );
+        // add_theme_support( 'custom-logo' );
+        // add_theme_support( 'custom-background' );
         add_theme_support( 'post-thumbnails' );
 
          add_theme_support(
@@ -54,7 +54,16 @@ if ( ! function_exists( 'ctpress_theme_functions' ) ) :
                 'audio',
             ]
         );
-        add_editor_style( "/assets/css/editor-style.css" );
+
+        $defaults = array(
+            'height'               => 100,
+            'width'                => 400,
+            'flex-height'          => true,
+            'flex-width'           => true,
+            'unlink-homepage-logo' => true, 
+        );
+ 
+        // add_theme_support( 'custom-logo', $defaults );
 
         /*Add theme support for AMP.*/
         add_theme_support( 'amp' );
@@ -192,6 +201,18 @@ final class codersTimePress {
             'before_sidebar' => '<div class="before_sidebar">',
             'after_sidebar'  => '</div>',
         ));
+
+        register_sidebar(array(
+            'name'          => esc_html__( 'Homepage 1 Sidebar', 'ctpress' ),
+            'description'   => esc_html__( 'This sidebar for homepage 1 sidebar (Latest Popular news)', 'ctpress' ),
+            'id'            =>'homepage_sidebar',
+            'before_title'  =>'<h3 class="py-3">',
+            'after_title'   =>'</h3>',
+            'before_widget' =>'<div class="homepage_sidebar sidebar_widget my-4">',
+            'after_widget' =>'</div>',
+            'before_sidebar' => '<div class="before_sidebar">',
+            'after_sidebar'  => '</div>',
+        ));
     }
 
     /*ad class on ul li a*/
@@ -237,7 +258,7 @@ if ( ! function_exists( 'ctpress_get_post_image' ) ) :
         $image_alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true) ?: get_the_title();
         
         if ( $medium_img ) :
-            return sprintf('<img class="img-responsive" src="%s" alt="%s">', $medium_img[0], $image_alt );
+            return sprintf('<figure class="img-holder text-center"><img class="img-responsive" src="%s" alt="%s"></figure>', $medium_img[0], $image_alt );
         else:
             return;
         endif;

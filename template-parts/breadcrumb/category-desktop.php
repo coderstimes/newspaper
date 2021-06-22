@@ -3,7 +3,7 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package Ctpress
  */
 $category = get_queried_object();
 ?>
