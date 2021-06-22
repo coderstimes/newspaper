@@ -3,7 +3,7 @@
  * Site Branding
  *
  * @version 1.0
- * @package Dynamico
+ * @package CtPress
  */
 
 $img_size = wp_is_mobile() ? 'medium' : 'medium_large';

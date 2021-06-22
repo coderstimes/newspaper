@@ -26,29 +26,6 @@ if ( ! function_exists( 'ctpress_menu_search' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'ctpress_search_header' ) ) :
-	/**
-	 * Displays the header title on search results.
-	 */
-	function ctpress_search_header() {
-		?>
-
-		<header class="search-header entry-header">
-
-			<h1 class="search-title entry-title">
-				<?php
-				// translators: Search Results title.
-				printf( esc_html__( 'Search Results for: %s', 'dynamico' ), '<span>' . get_search_query() . '</span>' );
-				?>
-			</h1>
-			<?php get_search_form(); ?>
-
-		</header><!-- .search-header -->
-
-		<?php
-	}
-endif;
-
 
 if ( ! function_exists( 'ctpress_site_title' ) ) :
 	/**
